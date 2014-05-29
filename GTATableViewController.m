@@ -102,13 +102,17 @@
 
 -(void)refreshEnemies
 {
-    PFQuery * query =[PFQuery queryWithClassName:@"UserSelfy"];
+    PFQuery * query =[PFQuery queryWithClassName:@"UserLocation"];
     
     //change order by created date
     [query orderByDescending:@"createdAt"];
     
     //filter only your user's selfies
     [query whereKey:@"parent" equalTo:[PFUser currentUser]];
+    //[query whereKey:(@"CurrentLocation") nearGeoPoint:(geoPoint) withinKilometers:currentLocation];
+    
+    
+    
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         

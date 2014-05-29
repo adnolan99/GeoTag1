@@ -42,9 +42,10 @@
     
     GTATableViewController * gtaTVC;
     
-    
 
 }
+
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -124,18 +125,18 @@
 {
     
     lastLocation = currentLocation;
-    NSLog(@"lastLocation set from previous currentLocation... %@", lastLocation);
+    NSLog(@"lastLocation : %@", lastLocation);
 
     for (CLLocation * location in locations)
     {
         currentLocation = location;
-        NSLog(@"currentLocation pulled from actualLocation... %@", currentLocation);
+        NSLog(@"currentLocation : %@", currentLocation);
     
         CLGeocoder * geoCoder = [[CLGeocoder alloc]init];
     
         [geoCoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error)
          {
-             NSLog(@"actualLocation in geo... %@", location);
+             NSLog(@"actualLocation : %@", location);
 
          
         
@@ -148,20 +149,49 @@
             //CLLocationCoordinate2D coordinate = [location coordinate];
             PFGeoPoint * geoPoint = [PFGeoPoint geoPointWithLatitude:location.coordinate.latitude
                                                           longitude:location.coordinate.longitude];
+            
+            
+            //PFGeoPoint * gpLatitude = [PFGeoPoint location.coordinate.latitude];
+            
+            userLocation[@"parent"]= [PFUser currentUser];
+
             userLocation[@"CurrentLocaton"] = geoPoint;
+            
+            
+            //userLocation[@"Latitude"] = currentLocation.coordinate.latitude;
+            
+            
+
+//            userLocation[@"Country"] = 
+//            userLocation[@"State"] =
+//            userLocation[@"City"] =
             
             [userLocation saveInBackground];
 
-            
-            NSLog(@"Parse location = ... %@",location);
-            NSLog(@"Parse currentLocation = ... %@",currentLocation);
-            NSLog(@"Parse geoPoint = ... %@",geoPoint);
+            NSLog(@"Parse geoPoint : %@",geoPoint);
 
             
             
             
-            //At this poin must also query parse to see who is near new location
             
+            
+            
+            //At this point must also query parse to see who is near new location
+            PFQuery * query =[PFQuery queryWithClassName:@"UserLocation"];
+            
+            //change order by created date
+            [query orderByDescending:@"createdAt"];
+            
+            //filter only your user's selfies
+            [query whereKey:@"parent" notEqualTo:[PFUser currentUser]];
+
+            [query whereKey:(@"CurrentLocation") nearGeoPoint:(geoPoint) withinKilometers:(1)];
+            
+            [query whereKey:(@"updatedAt") greaterThanOrEqualTo
+            
+            
+            [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            }];
             
             
         }
