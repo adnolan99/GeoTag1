@@ -1,0 +1,537 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D5932F73192FD38700E7BC8C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5932F72192FD38700E7BC8C /* Foundation.framework */; };
+		D5932F75192FD38700E7BC8C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5932F74192FD38700E7BC8C /* CoreGraphics.framework */; };
+		D5932F77192FD38700E7BC8C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5932F76192FD38700E7BC8C /* UIKit.framework */; };
+		D5932F7D192FD38700E7BC8C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D5932F7B192FD38700E7BC8C /* InfoPlist.strings */; };
+		D5932F7F192FD38700E7BC8C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D5932F7E192FD38700E7BC8C /* main.m */; };
+		D5932F83192FD38700E7BC8C /* GTAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D5932F82192FD38700E7BC8C /* GTAAppDelegate.m */; };
+		D5932F85192FD38700E7BC8C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5932F84192FD38700E7BC8C /* Images.xcassets */; };
+		D5932F8C192FD38700E7BC8C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5932F8B192FD38700E7BC8C /* XCTest.framework */; };
+		D5932F8D192FD38700E7BC8C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5932F72192FD38700E7BC8C /* Foundation.framework */; };
+		D5932F8E192FD38700E7BC8C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5932F76192FD38700E7BC8C /* UIKit.framework */; };
+		D5932F96192FD38700E7BC8C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D5932F94192FD38700E7BC8C /* InfoPlist.strings */; };
+		D5932F98192FD38700E7BC8C /* GeoTagTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D5932F97192FD38700E7BC8C /* GeoTagTests.m */; };
+		D5932FA3192FD45E00E7BC8C /* GTAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5932FA2192FD45E00E7BC8C /* GTAViewController.m */; };
+		D5932FA6192FD96900E7BC8C /* GTATableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5932FA5192FD96900E7BC8C /* GTATableViewController.m */; };
+		D5932FA81934CB3400E7BC8C /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5932FA71934CB3400E7BC8C /* Parse.framework */; };
+		D5932FAA1934CB5900E7BC8C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5932FA91934CB5900E7BC8C /* SystemConfiguration.framework */; };
+		D5932FAC1934CB6200E7BC8C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5932FAB1934CB6200E7BC8C /* StoreKit.framework */; };
+		D5932FAE1934CB6900E7BC8C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5932FAD1934CB6900E7BC8C /* Security.framework */; };
+		D5932FB01934CB7200E7BC8C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5932FAF1934CB7200E7BC8C /* QuartzCore.framework */; };
+		D5932FB21934CB7D00E7BC8C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5932FB11934CB7D00E7BC8C /* MobileCoreServices.framework */; };
+		D5932FB41934CB9400E7BC8C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5932FB31934CB9300E7BC8C /* CoreLocation.framework */; };
+		D5932FB61934CBA800E7BC8C /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5932FB51934CBA800E7BC8C /* CFNetwork.framework */; };
+		D5932FB81934CBB100E7BC8C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5932FB71934CBB100E7BC8C /* AudioToolbox.framework */; };
+		D5932FBC1934D14200E7BC8C /* GTASignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5932FBB1934D14200E7BC8C /* GTASignUpViewController.m */; };
+		D5932FC01934D3B000E7BC8C /* GTALoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5932FBF1934D3B000E7BC8C /* GTALoginViewController.m */; };
+		D5932FC31935466E00E7BC8C /* GTATableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D5932FC21935466E00E7BC8C /* GTATableViewCell.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D5932F8F192FD38700E7BC8C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D5932F67192FD38700E7BC8C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D5932F6E192FD38700E7BC8C;
+			remoteInfo = GeoTag;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D5932F6F192FD38700E7BC8C /* GeoTag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeoTag.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5932F72192FD38700E7BC8C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D5932F74192FD38700E7BC8C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		D5932F76192FD38700E7BC8C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D5932F7A192FD38700E7BC8C /* GeoTag-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GeoTag-Info.plist"; sourceTree = "<group>"; };
+		D5932F7C192FD38700E7BC8C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D5932F7E192FD38700E7BC8C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D5932F80192FD38700E7BC8C /* GeoTag-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GeoTag-Prefix.pch"; sourceTree = "<group>"; };
+		D5932F81192FD38700E7BC8C /* GTAAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTAAppDelegate.h; sourceTree = "<group>"; };
+		D5932F82192FD38700E7BC8C /* GTAAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTAAppDelegate.m; sourceTree = "<group>"; };
+		D5932F84192FD38700E7BC8C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		D5932F8A192FD38700E7BC8C /* GeoTagTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GeoTagTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5932F8B192FD38700E7BC8C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		D5932F93192FD38700E7BC8C /* GeoTagTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GeoTagTests-Info.plist"; sourceTree = "<group>"; };
+		D5932F95192FD38700E7BC8C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D5932F97192FD38700E7BC8C /* GeoTagTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GeoTagTests.m; sourceTree = "<group>"; };
+		D5932FA1192FD45E00E7BC8C /* GTAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTAViewController.h; sourceTree = "<group>"; };
+		D5932FA2192FD45E00E7BC8C /* GTAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTAViewController.m; sourceTree = "<group>"; };
+		D5932FA4192FD96900E7BC8C /* GTATableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTATableViewController.h; sourceTree = SOURCE_ROOT; };
+		D5932FA5192FD96900E7BC8C /* GTATableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTATableViewController.m; sourceTree = SOURCE_ROOT; };
+		D5932FA71934CB3400E7BC8C /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		D5932FA91934CB5900E7BC8C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		D5932FAB1934CB6200E7BC8C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		D5932FAD1934CB6900E7BC8C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		D5932FAF1934CB7200E7BC8C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		D5932FB11934CB7D00E7BC8C /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		D5932FB31934CB9300E7BC8C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		D5932FB51934CBA800E7BC8C /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		D5932FB71934CBB100E7BC8C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		D5932FBA1934D14200E7BC8C /* GTASignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTASignUpViewController.h; path = GeoTag/GTASignUpViewController.h; sourceTree = "<group>"; };
+		D5932FBB1934D14200E7BC8C /* GTASignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GTASignUpViewController.m; path = GeoTag/GTASignUpViewController.m; sourceTree = "<group>"; };
+		D5932FBE1934D3B000E7BC8C /* GTALoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTALoginViewController.h; path = GeoTag/GTALoginViewController.h; sourceTree = "<group>"; };
+		D5932FBF1934D3B000E7BC8C /* GTALoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GTALoginViewController.m; path = GeoTag/GTALoginViewController.m; sourceTree = "<group>"; };
+		D5932FC11935466E00E7BC8C /* GTATableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTATableViewCell.h; sourceTree = "<group>"; };
+		D5932FC21935466E00E7BC8C /* GTATableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTATableViewCell.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D5932F6C192FD38700E7BC8C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D5932FB81934CBB100E7BC8C /* AudioToolbox.framework in Frameworks */,
+				D5932FB61934CBA800E7BC8C /* CFNetwork.framework in Frameworks */,
+				D5932FB41934CB9400E7BC8C /* CoreLocation.framework in Frameworks */,
+				D5932FB21934CB7D00E7BC8C /* MobileCoreServices.framework in Frameworks */,
+				D5932FB01934CB7200E7BC8C /* QuartzCore.framework in Frameworks */,
+				D5932FAE1934CB6900E7BC8C /* Security.framework in Frameworks */,
+				D5932FAC1934CB6200E7BC8C /* StoreKit.framework in Frameworks */,
+				D5932FAA1934CB5900E7BC8C /* SystemConfiguration.framework in Frameworks */,
+				D5932F75192FD38700E7BC8C /* CoreGraphics.framework in Frameworks */,
+				D5932F77192FD38700E7BC8C /* UIKit.framework in Frameworks */,
+				D5932FA81934CB3400E7BC8C /* Parse.framework in Frameworks */,
+				D5932F73192FD38700E7BC8C /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D5932F87192FD38700E7BC8C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D5932F8C192FD38700E7BC8C /* XCTest.framework in Frameworks */,
+				D5932F8E192FD38700E7BC8C /* UIKit.framework in Frameworks */,
+				D5932F8D192FD38700E7BC8C /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D5932F66192FD38700E7BC8C = {
+			isa = PBXGroup;
+			children = (
+				D5932FBD1934D15A00E7BC8C /* GTAsignup/login */,
+				D5932F78192FD38700E7BC8C /* GeoTag */,
+				D5932F91192FD38700E7BC8C /* GeoTagTests */,
+				D5932F71192FD38700E7BC8C /* Frameworks */,
+				D5932F70192FD38700E7BC8C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D5932F70192FD38700E7BC8C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D5932F6F192FD38700E7BC8C /* GeoTag.app */,
+				D5932F8A192FD38700E7BC8C /* GeoTagTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D5932F71192FD38700E7BC8C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D5932FB71934CBB100E7BC8C /* AudioToolbox.framework */,
+				D5932FB51934CBA800E7BC8C /* CFNetwork.framework */,
+				D5932FB31934CB9300E7BC8C /* CoreLocation.framework */,
+				D5932FB11934CB7D00E7BC8C /* MobileCoreServices.framework */,
+				D5932FAF1934CB7200E7BC8C /* QuartzCore.framework */,
+				D5932FAD1934CB6900E7BC8C /* Security.framework */,
+				D5932FAB1934CB6200E7BC8C /* StoreKit.framework */,
+				D5932FA91934CB5900E7BC8C /* SystemConfiguration.framework */,
+				D5932FA71934CB3400E7BC8C /* Parse.framework */,
+				D5932F72192FD38700E7BC8C /* Foundation.framework */,
+				D5932F74192FD38700E7BC8C /* CoreGraphics.framework */,
+				D5932F76192FD38700E7BC8C /* UIKit.framework */,
+				D5932F8B192FD38700E7BC8C /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D5932F78192FD38700E7BC8C /* GeoTag */ = {
+			isa = PBXGroup;
+			children = (
+				D5932F81192FD38700E7BC8C /* GTAAppDelegate.h */,
+				D5932F82192FD38700E7BC8C /* GTAAppDelegate.m */,
+				D5932FA1192FD45E00E7BC8C /* GTAViewController.h */,
+				D5932FA2192FD45E00E7BC8C /* GTAViewController.m */,
+				D5932FA4192FD96900E7BC8C /* GTATableViewController.h */,
+				D5932FA5192FD96900E7BC8C /* GTATableViewController.m */,
+				D5932FC11935466E00E7BC8C /* GTATableViewCell.h */,
+				D5932FC21935466E00E7BC8C /* GTATableViewCell.m */,
+				D5932F84192FD38700E7BC8C /* Images.xcassets */,
+				D5932F79192FD38700E7BC8C /* Supporting Files */,
+			);
+			path = GeoTag;
+			sourceTree = "<group>";
+		};
+		D5932F79192FD38700E7BC8C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D5932F7A192FD38700E7BC8C /* GeoTag-Info.plist */,
+				D5932F7B192FD38700E7BC8C /* InfoPlist.strings */,
+				D5932F7E192FD38700E7BC8C /* main.m */,
+				D5932F80192FD38700E7BC8C /* GeoTag-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D5932F91192FD38700E7BC8C /* GeoTagTests */ = {
+			isa = PBXGroup;
+			children = (
+				D5932F97192FD38700E7BC8C /* GeoTagTests.m */,
+				D5932F92192FD38700E7BC8C /* Supporting Files */,
+			);
+			path = GeoTagTests;
+			sourceTree = "<group>";
+		};
+		D5932F92192FD38700E7BC8C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D5932F93192FD38700E7BC8C /* GeoTagTests-Info.plist */,
+				D5932F94192FD38700E7BC8C /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D5932FBD1934D15A00E7BC8C /* GTAsignup/login */ = {
+			isa = PBXGroup;
+			children = (
+				D5932FBA1934D14200E7BC8C /* GTASignUpViewController.h */,
+				D5932FBB1934D14200E7BC8C /* GTASignUpViewController.m */,
+				D5932FBE1934D3B000E7BC8C /* GTALoginViewController.h */,
+				D5932FBF1934D3B000E7BC8C /* GTALoginViewController.m */,
+			);
+			name = GTAsignup/login;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D5932F6E192FD38700E7BC8C /* GeoTag */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D5932F9B192FD38700E7BC8C /* Build configuration list for PBXNativeTarget "GeoTag" */;
+			buildPhases = (
+				D5932F6B192FD38700E7BC8C /* Sources */,
+				D5932F6C192FD38700E7BC8C /* Frameworks */,
+				D5932F6D192FD38700E7BC8C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GeoTag;
+			productName = GeoTag;
+			productReference = D5932F6F192FD38700E7BC8C /* GeoTag.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D5932F89192FD38700E7BC8C /* GeoTagTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D5932F9E192FD38700E7BC8C /* Build configuration list for PBXNativeTarget "GeoTagTests" */;
+			buildPhases = (
+				D5932F86192FD38700E7BC8C /* Sources */,
+				D5932F87192FD38700E7BC8C /* Frameworks */,
+				D5932F88192FD38700E7BC8C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D5932F90192FD38700E7BC8C /* PBXTargetDependency */,
+			);
+			name = GeoTagTests;
+			productName = GeoTagTests;
+			productReference = D5932F8A192FD38700E7BC8C /* GeoTagTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D5932F67192FD38700E7BC8C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = GTA;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Austin Nolan";
+				TargetAttributes = {
+					D5932F89192FD38700E7BC8C = {
+						TestTargetID = D5932F6E192FD38700E7BC8C;
+					};
+				};
+			};
+			buildConfigurationList = D5932F6A192FD38700E7BC8C /* Build configuration list for PBXProject "GeoTag" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D5932F66192FD38700E7BC8C;
+			productRefGroup = D5932F70192FD38700E7BC8C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D5932F6E192FD38700E7BC8C /* GeoTag */,
+				D5932F89192FD38700E7BC8C /* GeoTagTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D5932F6D192FD38700E7BC8C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D5932F7D192FD38700E7BC8C /* InfoPlist.strings in Resources */,
+				D5932F85192FD38700E7BC8C /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D5932F88192FD38700E7BC8C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D5932F96192FD38700E7BC8C /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D5932F6B192FD38700E7BC8C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D5932F7F192FD38700E7BC8C /* main.m in Sources */,
+				D5932FA3192FD45E00E7BC8C /* GTAViewController.m in Sources */,
+				D5932FA6192FD96900E7BC8C /* GTATableViewController.m in Sources */,
+				D5932FC01934D3B000E7BC8C /* GTALoginViewController.m in Sources */,
+				D5932FBC1934D14200E7BC8C /* GTASignUpViewController.m in Sources */,
+				D5932F83192FD38700E7BC8C /* GTAAppDelegate.m in Sources */,
+				D5932FC31935466E00E7BC8C /* GTATableViewCell.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D5932F86192FD38700E7BC8C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D5932F98192FD38700E7BC8C /* GeoTagTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D5932F90192FD38700E7BC8C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D5932F6E192FD38700E7BC8C /* GeoTag */;
+			targetProxy = D5932F8F192FD38700E7BC8C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D5932F7B192FD38700E7BC8C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D5932F7C192FD38700E7BC8C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		D5932F94192FD38700E7BC8C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D5932F95192FD38700E7BC8C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D5932F99192FD38700E7BC8C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		D5932F9A192FD38700E7BC8C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D5932F9C192FD38700E7BC8C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GeoTag/GeoTag-Prefix.pch";
+				INFOPLIST_FILE = "GeoTag/GeoTag-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D5932F9D192FD38700E7BC8C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GeoTag/GeoTag-Prefix.pch";
+				INFOPLIST_FILE = "GeoTag/GeoTag-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		D5932F9F192FD38700E7BC8C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/GeoTag.app/GeoTag";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GeoTag/GeoTag-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "GeoTagTests/GeoTagTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		D5932FA0192FD38700E7BC8C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/GeoTag.app/GeoTag";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GeoTag/GeoTag-Prefix.pch";
+				INFOPLIST_FILE = "GeoTagTests/GeoTagTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D5932F6A192FD38700E7BC8C /* Build configuration list for PBXProject "GeoTag" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D5932F99192FD38700E7BC8C /* Debug */,
+				D5932F9A192FD38700E7BC8C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D5932F9B192FD38700E7BC8C /* Build configuration list for PBXNativeTarget "GeoTag" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D5932F9C192FD38700E7BC8C /* Debug */,
+				D5932F9D192FD38700E7BC8C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		D5932F9E192FD38700E7BC8C /* Build configuration list for PBXNativeTarget "GeoTagTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D5932F9F192FD38700E7BC8C /* Debug */,
+				D5932FA0192FD38700E7BC8C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D5932F67192FD38700E7BC8C /* Project object */;
+}
