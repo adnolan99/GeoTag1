@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D50FCA491938D7A700EC09A5 /* GTASingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = D50FCA481938D7A700EC09A5 /* GTASingleton.m */; };
 		D5932F73192FD38700E7BC8C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5932F72192FD38700E7BC8C /* Foundation.framework */; };
 		D5932F75192FD38700E7BC8C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5932F74192FD38700E7BC8C /* CoreGraphics.framework */; };
 		D5932F77192FD38700E7BC8C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5932F76192FD38700E7BC8C /* UIKit.framework */; };
@@ -46,6 +47,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D50FCA471938D7A700EC09A5 /* GTASingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTASingleton.h; sourceTree = "<group>"; };
+		D50FCA481938D7A700EC09A5 /* GTASingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTASingleton.m; sourceTree = "<group>"; };
 		D5932F6F192FD38700E7BC8C /* GeoTag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeoTag.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5932F72192FD38700E7BC8C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D5932F74192FD38700E7BC8C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -161,6 +164,8 @@
 			children = (
 				D5932F81192FD38700E7BC8C /* GTAAppDelegate.h */,
 				D5932F82192FD38700E7BC8C /* GTAAppDelegate.m */,
+				D50FCA471938D7A700EC09A5 /* GTASingleton.h */,
+				D50FCA481938D7A700EC09A5 /* GTASingleton.m */,
 				D5932FA1192FD45E00E7BC8C /* GTAViewController.h */,
 				D5932FA2192FD45E00E7BC8C /* GTAViewController.m */,
 				D5932FA4192FD96900E7BC8C /* GTATableViewController.h */,
@@ -309,6 +314,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D50FCA491938D7A700EC09A5 /* GTASingleton.m in Sources */,
 				D5932F7F192FD38700E7BC8C /* main.m in Sources */,
 				D5932FA3192FD45E00E7BC8C /* GTAViewController.m in Sources */,
 				D5932FA6192FD96900E7BC8C /* GTATableViewController.m in Sources */,
@@ -522,6 +528,7 @@
 				D5932F9D192FD38700E7BC8C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D5932F9E192FD38700E7BC8C /* Build configuration list for PBXNativeTarget "GeoTagTests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +537,7 @@
 				D5932FA0192FD38700E7BC8C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

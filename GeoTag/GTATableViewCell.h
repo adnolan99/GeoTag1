@@ -13,7 +13,7 @@
 @interface GTATableViewCell : UITableViewCell
 
 
-@property (nonatomic) PFObject * profile;
+@property (nonatomic) PFObject * enemyProfile;
 
 
 

@@ -12,6 +12,8 @@
 
 #import "GTATableViewCell.h"
 
+#import "GTASingleton.h"
+
 #import <Parse/Parse.h>
 
 @interface GTATableViewController () <CLLocationManagerDelegate>
@@ -26,9 +28,9 @@
     UITableView * enemies;
 
     
-    NSMutableArray * enemiesInProximity;
+    //NSMutableArray * enemiesInProximity;
     
-    NSArray * enemyProfiles;
+    //NSArray * enemyProfiles;
     
     CLLocation * currentLocation;
     CLLocation * lastLocation;
@@ -96,43 +98,51 @@
 {
     
     // Return the number of rows in the section.
-    return [enemiesInProximity count];
+    
+    
+    
+    return [[GTASingleton sharedData].enemiesInProximity count];
 }
 
 
--(void)refreshEnemies
-{
-    PFQuery * query =[PFQuery queryWithClassName:@"UserLocation"];
-    
-    //change order by created date
-    [query orderByDescending:@"createdAt"];
-    
-    //filter only your user's selfies
-    [query whereKey:@"parent" equalTo:[PFUser currentUser]];
-    //[query whereKey:(@"CurrentLocation") nearGeoPoint:(geoPoint) withinKilometers:currentLocation];
-    
-    
-    
-    
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        
-        
-        enemyProfiles = objects;
-        
-        [self.tableView reloadData];
-        
-    }];
-    
-    
-    // change order by created date : newest first
-    // after user connected to selfy : filter only your user's selfies
-    
-    
-    
-    
-    
-    
-}
+//-(void)refreshEnemyProfileList
+//{
+//    [GTASingleton sharedData].enemyProfiles = [@[
+//      
+//                                                @{@"CallSign":@"DynamicCallSign",@"Username":@"DynamicUsername",@"Distance":@"dynamicDistanceToEnemy",@"Avatar":@"dynamicUserAvatar"},]mutableCopy];
+//    
+//    
+//    PFQuery * query =[PFQuery queryWithClassName:@"User"];
+//    
+//    //change order by created date
+//    [query orderByDescending:@"createdAt"];
+//    
+//    //filter only your user's selfies
+//    [query whereKey:@"parent" equalTo:[PFUser currentUser]];
+//    //[query whereKey:(@"CurrentLocation") nearGeoPoint:(geoPoint) withinKilometers:currentLocation];
+//    
+//    
+//    
+//    
+//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//        
+//        
+//        //enemyProfiles = objects;
+//        
+//        [self.tableView reloadData];
+//        
+//    }];
+//    
+//    
+//    // change order by created date : newest first
+//    // after user connected to selfy : filter only your user's selfies
+//    
+//    
+//    
+//    
+//    
+//    
+//}
 
 
 
@@ -154,9 +164,9 @@
     //comment out, not sure what this is doing
     //cell.delegate = self;
     
-    NSDictionary * profile = enemyProfiles[indexPath.row];
+    NSDictionary * enemyProfile = [GTASingleton sharedData].enemyProfiles[indexPath.row];
     
-    cell.profile = profile;
+    cell.enemyProfile = enemyProfile;
     
     
     //cell.nameLabel.text = enemy[@"Username"];

@@ -10,6 +10,8 @@
 
 #import "GTATableViewController.h"
 
+#import "GTASingleton.h"
+
 #import <CoreLocation/CoreLocation.h>
 
 @interface GTAViewController () <CLLocationManagerDelegate>
@@ -28,9 +30,9 @@
     UITableView * enemies;
     
     
-    NSMutableArray * enemiesInProximity;
+    //NSMutableArray * enemiesInProximity;
     
-    NSArray * enemyProfiles;
+    //NSArray * enemyProfiles;
     
     CLLocation * currentLocation;
     CLLocation * lastLocation;
@@ -62,18 +64,20 @@
         
         
         
-//        [UITableView animateWithDuration:0.2 animations:^{
-//            self.view.frame = CGRectMake(0, 200, self.view.frame.size.width, self.view.frame.size.height);
-//        }];
-//        [self.navigationController pushViewController:gtaTVC animated:YES];
+        [UITableView animateWithDuration:0.2 animations:^{
+            gtaTVC.view.frame = CGRectMake(0, 300, self.view.frame.size.width, self.view.frame.size.height);
+        }];
+        [self.navigationController pushViewController:gtaTVC animated:YES];
 //        self.navigationController.toolbarHidden = YES;
-//        self.navigationController.navigationBarHidden = YES;
+        self.navigationController.navigationBarHidden = YES;
+        
+        
+        [self.view addSubview:gtaTVC.view];
         
         
         
+        [GTASingleton sharedData].enemiesInProximity = [@[] mutableCopy];
         
-        
-        enemiesInProximity = [@[] mutableCopy];
         
         
         lManager = [[CLLocationManager alloc]init];
@@ -126,71 +130,71 @@
     
     lastLocation = currentLocation;
     NSLog(@"lastLocation : %@", lastLocation);
-
     for (CLLocation * location in locations)
     {
         currentLocation = location;
         NSLog(@"currentLocation : %@", currentLocation);
-    
         CLGeocoder * geoCoder = [[CLGeocoder alloc]init];
-    
         [geoCoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error)
          {
              NSLog(@"actualLocation : %@", location);
-
-         
-        
-        
         if (lastLocation != currentLocation)
         {
-            
             PFObject * userLocation = [PFObject objectWithClassName:@"UserLocationLog"];
-            
             //CLLocationCoordinate2D coordinate = [location coordinate];
             PFGeoPoint * geoPoint = [PFGeoPoint geoPointWithLatitude:location.coordinate.latitude
                                                           longitude:location.coordinate.longitude];
-            
-            
             //PFGeoPoint * gpLatitude = [PFGeoPoint location.coordinate.latitude];
-            
             userLocation[@"parent"]= [PFUser currentUser];
-
-            userLocation[@"CurrentLocaton"] = geoPoint;
-            
-            
+            userLocation[@"CurrentLocation"] = geoPoint;
             //userLocation[@"Latitude"] = currentLocation.coordinate.latitude;
-            
-            
-
 //            userLocation[@"Country"] = 
 //            userLocation[@"State"] =
 //            userLocation[@"City"] =
-            
             [userLocation saveInBackground];
-
             NSLog(@"Parse geoPoint : %@",geoPoint);
 
-            
-            
-            
-            
-            
-            
             //At this point must also query parse to see who is near new location
-            PFQuery * query =[PFQuery queryWithClassName:@"UserLocation"];
-            
-            //change order by created date
+            PFQuery * query =[PFQuery queryWithClassName:@"UserLocationLog"];
             [query orderByDescending:@"createdAt"];
-            
-            //filter only your user's selfies
             [query whereKey:@"parent" notEqualTo:[PFUser currentUser]];
-
-            [query whereKey:(@"CurrentLocation") nearGeoPoint:(geoPoint) withinKilometers:(1)];
+            [query whereKey:@"CurrentLocation" nearGeoPoint:geoPoint withinKilometers:1.0];
+            [query whereKey:(@"updatedAt") greaterThanOrEqualTo:[NSDate dateWithTimeIntervalSinceNow:-60 * 20]];
+            [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+            {
+                NSLog(@"%@",objects);
             
-            [query whereKey:(@"updatedAt") greaterThanOrEqualTo
+                //Need to cycle through objects array, and query parse for the objectId's that it retruns in order to get, the call sign, username, avatar
+                
             
-            
-            [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                for (PFObject * userLocation in objects)
+                {
+                    PFUser * parent = userLocation[@"parent"];
+                    
+//                    NSLog(@"%@",parent.objectId);
+                    
+                    [parent fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                        
+                        PFUser * user = (PFUser *)object;
+                        
+                        // singleton add user to mutable array
+                        // trigger tableview to reload
+                        
+                    }];
+                    
+                    
+//                    PFQuery * query2 = [PFQuery queryWithClassName:@"User"];
+//                    
+//                    [query2 getObjectInBackgroundWithId:parent.objectId block:^(PFObject * user, NSError *error)
+//                    {
+//                        // Do something with the returned PFObject in the gameScore variable.
+//                        NSLog(@"%@", user);
+//                
+//                    }];
+                    //[gtaTVC.view addConstraints:[GTASingleton sharedData].enemyProfiles];
+                
+                }
+                [self.view addSubview:gtaTVC.view];
             }];
             
             
@@ -201,7 +205,7 @@
         }
         
          }];
-}
+    }
 }
 
 
