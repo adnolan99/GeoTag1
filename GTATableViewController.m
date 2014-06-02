@@ -18,6 +18,9 @@
 
 @interface GTATableViewController () <CLLocationManagerDelegate>
 
+@property UILabel * nameLabel;
+@property UILabel * callSignLabel;
+
 @end
 
 @implementation GTATableViewController
@@ -32,12 +35,15 @@
     
     //NSArray * enemyProfiles;
     
+    NSArray * enemyProfilesArray;
+
+    
     CLLocation * currentLocation;
     CLLocation * lastLocation;
     
     GTATableViewController * gtaTVC;
 
-    
+    UIImage * avatar;
     
     
     
@@ -45,14 +51,17 @@
     
     
 }
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
         
-        
+//        
+//        enemyProfilesArray = [GTASingleton sharedData].enemiesInProximity;
+//
+//        [self.view addConstraints:enemyProfilesArray];
 
-        
         
         // Custom initialization
     }
@@ -108,10 +117,8 @@
 //-(void)refreshEnemyProfileList
 //{
 //    [GTASingleton sharedData].enemyProfiles = [@[
-//      
-//                                                @{@"CallSign":@"DynamicCallSign",@"Username":@"DynamicUsername",@"Distance":@"dynamicDistanceToEnemy",@"Avatar":@"dynamicUserAvatar"},]mutableCopy];
-//    
-//    
+//                                             @{@"CallSign":@"DynamicCallSign",@"Username":@"DynamicUsername",@"Distance":@"dynamicDistanceToEnemy",@"Avatar":@"dynamicUserAvatar"},]mutableCopy];
+//
 //    PFQuery * query =[PFQuery queryWithClassName:@"User"];
 //    
 //    //change order by created date
@@ -120,10 +127,6 @@
 //    //filter only your user's selfies
 //    [query whereKey:@"parent" equalTo:[PFUser currentUser]];
 //    //[query whereKey:(@"CurrentLocation") nearGeoPoint:(geoPoint) withinKilometers:currentLocation];
-//    
-//    
-//    
-//    
 //    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
 //        
 //        
@@ -132,16 +135,8 @@
 //        [self.tableView reloadData];
 //        
 //    }];
-//    
-//    
 //    // change order by created date : newest first
 //    // after user connected to selfy : filter only your user's selfies
-//    
-//    
-//    
-//    
-//    
-//    
 //}
 
 
@@ -151,35 +146,35 @@
     
     GTATableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
-    if (cell == nil)
-    {
-        cell = [[ GTATableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    if (cell == nil) cell = [[GTATableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     
     
-        cell.textLabel.text = [GTASingleton sharedData].enemiesInProximity[indexPath.row][@"callSign"];
 
-    }
+    
     
     
     
     //comment out, not sure what this is doing
     //[cell resetLayout];
-    
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
+    //cell.selectionStyle = UITableViewCellSelectionStyleNone;
     //comment out, not sure what this is doing
     //cell.delegate = self;
     
-    NSDictionary * enemyProfile = [GTASingleton sharedData].enemyProfiles[indexPath.row];
-    
-    cell.enemyProfile = enemyProfile;
     
     
-    //cell.nameLabel.text = enemy[@"Username"];
+    NSDictionary * enemy = [GTASingleton sharedData].enemiesInProximity[indexPath.row];
+//
+//    cell.textLabel.text = enemy[@"callSign"];
+    
+    
+    cell.enemyProfile = enemy;
+    
+    
+    
+    
+    
+    self.tableView.rowHeight = 100;
 
-    
-    
-    // Configure the cell...
     
     return cell;
 }

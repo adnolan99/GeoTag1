@@ -14,6 +14,7 @@
 
 
 @property (nonatomic) PFObject * enemyProfile;
+@property (nonatomic) NSInteger index;
 
 
 

@@ -38,4 +38,20 @@
     return singleton;
 }
 
+-(id)init
+{
+    
+    self = [super init];
+    
+    if (self)
+    {
+        self.enemiesInProximity = [@[]mutableCopy];
+        
+        self.enemyProfiles = [@[]mutableCopy];
+
+    }
+    
+    return self;
+}
+
 @end

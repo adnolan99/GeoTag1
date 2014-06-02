@@ -159,18 +159,22 @@
                     
                     [parent fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
                         
-                        PFUser * user = (PFUser *)object;
+                        PFUser * callSign = (PFUser *)object[@"callSign"];
                         
+                        NSLog(@"%@", callSign);
+
+                    
                         // singleton add user to mutable array
                         
-//                        [GTASingleton sharedData].enemiesInProximity = user;
-//                        
-//                        [gtaTVC.view addConstraints:[GTASingleton sharedData].enemiesInProximity];
-                        
+                        [[GTASingleton sharedData].enemiesInProximity addObject:object];
+//
                         // trigger tableview to reload
                         
+//                        NSArray * newEnemies = [GTASingleton sharedData].enemiesInProximity;
                         
-                        NSLog(@"%@", user);
+//                        [gtaTVC.tableView addConstraints:newEnemies];
+                        
+                        [gtaTVC.tableView reloadData];
 
                     }];
                     
@@ -194,8 +198,6 @@
                 }
                 [self.view addSubview:gtaTVC.view];
             }];
-            
-            
         }
         else
         {

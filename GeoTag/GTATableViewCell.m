@@ -8,6 +8,10 @@
 
 #import "GTATableViewCell.h"
 
+#import "GTASingleton.h"
+
+
+
 @implementation GTATableViewCell
 {
     
@@ -15,6 +19,8 @@
     UILabel * displayUserName;
     UILabel * displayCallSign;
     UILabel * displayDistance;
+    
+    
 }
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -23,25 +29,28 @@
         
         
         
-        displayUserAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(20, 275, 40, 40)];
+        displayUserAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, 10, 10)];
         displayUserAvatar.backgroundColor = [UIColor redColor];
         [self.contentView addSubview:displayUserAvatar];
         
+//        
+//        displayUserName = [[UILabel alloc] initWithFrame:CGRectMake(30, 0, 10, 10)];
+//        displayUserName.textColor = [UIColor blackColor];
+//        displayUserName.font = [UIFont systemFontOfSize:20];
+//        [self.contentView addSubview:displayUserName];
         
-        displayUserName = [[UILabel alloc] initWithFrame:CGRectMake(80, 285, 220, 40)];
-        displayUserName.textColor = [UIColor blackColor];
-        displayUserName.font = [UIFont systemFontOfSize:20];
-        [self.contentView addSubview:displayUserName];
-        
-        displayCallSign = [[UILabel alloc] initWithFrame:CGRectMake(80, 285, 220, 40)];
-        displayCallSign.textColor = [UIColor blackColor];
+        displayCallSign = [[UILabel alloc] initWithFrame:CGRectMake(30, 15, 50, 20)];
+        displayCallSign.textColor = [UIColor greenColor];
+        displayCallSign.backgroundColor = [UIColor blueColor];
         displayCallSign.font = [UIFont systemFontOfSize:20];
         [self.contentView addSubview:displayCallSign];
+
         
-        displayDistance = [[UILabel alloc] initWithFrame:CGRectMake(80, 285, 220, 40)];
-        displayDistance.textColor = [UIColor blackColor];
-        displayDistance.font = [UIFont systemFontOfSize:20];
-        [self.contentView addSubview:displayDistance];
+    
+//        displayDistance = [[UILabel alloc] initWithFrame:CGRectMake(80, 285, 220, 40)];
+//        displayDistance.textColor = [UIColor blackColor];
+//        displayDistance.font = [UIFont systemFontOfSize:20];
+//        [self.contentView addSubview:displayDistance];
         
         
         
@@ -53,6 +62,26 @@
     }
     return self;
 }
+
+//
+-(void)setProfile: (PFObject *)enemyProfile
+{
+    _enemyProfile = enemyProfile;
+    
+    displayCallSign.text = [enemyProfile objectForKey:@"callSign"];
+
+    NSLog(@"TVCell log %@", displayCallSign.text);
+    
+    
+    
+    //NSDictionary * enemy = [GTASingleton sharedData].enemiesInProximity[index];
+    //displayCallSign.text = enemy[@"callSign"];
+
+}
+
+
+
+
 
 - (void)awakeFromNib
 {
