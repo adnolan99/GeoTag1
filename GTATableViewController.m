@@ -151,8 +151,14 @@
     
     GTATableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
-    if (cell == nil) cell = [[ GTATableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    if (cell == nil)
+    {
+        cell = [[ GTATableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     
+    
+        cell.textLabel.text = [GTASingleton sharedData].enemiesInProximity[indexPath.row][@"callSign"];
+
+    }
     
     
     

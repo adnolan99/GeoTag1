@@ -89,13 +89,12 @@
         
         [lManager startUpdatingLocation];
         
+        
+        
+//        This is a hardcoded test user
 //        CLLocation * testUser1Location = [[CLLocation alloc]initWithLatitude:37.788 longitude:-122.409];
-//        CLLocation * testUser2Location = [[CLLocation alloc]initWithLatitude:37.7878 longitude:-122.4088];
-//        CLLocation * testUser3Location = [[CLLocation alloc]initWithLatitude:37.7876 longitude:-122.4086];
-//        
 //        CLGeocoder * geoCoder1 = [[CLGeocoder alloc]init];
-//        CLGeocoder * geoCoder2 = [[CLGeocoder alloc]init];
-//        CLGeocoder * geoCoder3 = [[CLGeocoder alloc]init];
+//
 //        
 //        
 //        [geoCoder1 reverseGeocodeLocation:testUser1Location completionHandler:^(NSArray * friendly1, NSError *error)
@@ -103,21 +102,6 @@
 //             //NSLog(@"This is testUser1Location %@", friendly1);
 //             
 //         }];
-//        
-//        
-//        [geoCoder2 reverseGeocodeLocation:testUser2Location completionHandler:^(NSArray * friendly2, NSError *error)
-//         {
-//             //NSLog(@"This is testUser2Location %@", friendly2);
-//             
-//         }];
-//        
-//        [geoCoder3 reverseGeocodeLocation:testUser3Location completionHandler:^(NSArray * friendly3, NSError *error)
-//         {
-//             //NSLog(@"This is testUser3Location %@", friendly3);
-//             
-//         }];
-        
-        
         
         // Custom initialization
     }
@@ -178,19 +162,33 @@
                         PFUser * user = (PFUser *)object;
                         
                         // singleton add user to mutable array
+                        
+//                        [GTASingleton sharedData].enemiesInProximity = user;
+//                        
+//                        [gtaTVC.view addConstraints:[GTASingleton sharedData].enemiesInProximity];
+                        
                         // trigger tableview to reload
                         
+                        
+                        NSLog(@"%@", user);
+
                     }];
                     
                     
+                    
+                    
+                    //Don't need this 2nd query b/c there is a built in way to retrive data, see fetch call above
 //                    PFQuery * query2 = [PFQuery queryWithClassName:@"User"];
-//                    
 //                    [query2 getObjectInBackgroundWithId:parent.objectId block:^(PFObject * user, NSError *error)
 //                    {
 //                        // Do something with the returned PFObject in the gameScore variable.
 //                        NSLog(@"%@", user);
-//                
 //                    }];
+                    
+                    
+                    
+                    
+                    
                     //[gtaTVC.view addConstraints:[GTASingleton sharedData].enemyProfiles];
                 
                 }
