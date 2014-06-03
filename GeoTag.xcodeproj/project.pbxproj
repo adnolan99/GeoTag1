@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		D50FCA491938D7A700EC09A5 /* GTASingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = D50FCA481938D7A700EC09A5 /* GTASingleton.m */; };
+		D50FCAA6193E3F7400EC09A5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D50FCAA5193E3F7400EC09A5 /* MapKit.framework */; };
+		D50FCAA9193E423A00EC09A5 /* MAPAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = D50FCAA8193E423A00EC09A5 /* MAPAnnotation.m */; };
 		D5932F73192FD38700E7BC8C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5932F72192FD38700E7BC8C /* Foundation.framework */; };
 		D5932F75192FD38700E7BC8C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5932F74192FD38700E7BC8C /* CoreGraphics.framework */; };
 		D5932F77192FD38700E7BC8C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5932F76192FD38700E7BC8C /* UIKit.framework */; };
@@ -49,6 +51,9 @@
 /* Begin PBXFileReference section */
 		D50FCA471938D7A700EC09A5 /* GTASingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTASingleton.h; sourceTree = "<group>"; };
 		D50FCA481938D7A700EC09A5 /* GTASingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTASingleton.m; sourceTree = "<group>"; };
+		D50FCAA5193E3F7400EC09A5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		D50FCAA7193E423A00EC09A5 /* MAPAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAPAnnotation.h; sourceTree = "<group>"; };
+		D50FCAA8193E423A00EC09A5 /* MAPAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAPAnnotation.m; sourceTree = "<group>"; };
 		D5932F6F192FD38700E7BC8C /* GeoTag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeoTag.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5932F72192FD38700E7BC8C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D5932F74192FD38700E7BC8C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -91,6 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D50FCAA6193E3F7400EC09A5 /* MapKit.framework in Frameworks */,
 				D5932FB81934CBB100E7BC8C /* AudioToolbox.framework in Frameworks */,
 				D5932FB61934CBA800E7BC8C /* CFNetwork.framework in Frameworks */,
 				D5932FB41934CB9400E7BC8C /* CoreLocation.framework in Frameworks */,
@@ -142,6 +148,7 @@
 		D5932F71192FD38700E7BC8C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D50FCAA5193E3F7400EC09A5 /* MapKit.framework */,
 				D5932FB71934CBB100E7BC8C /* AudioToolbox.framework */,
 				D5932FB51934CBA800E7BC8C /* CFNetwork.framework */,
 				D5932FB31934CB9300E7BC8C /* CoreLocation.framework */,
@@ -162,6 +169,8 @@
 		D5932F78192FD38700E7BC8C /* GeoTag */ = {
 			isa = PBXGroup;
 			children = (
+				D50FCAA7193E423A00EC09A5 /* MAPAnnotation.h */,
+				D50FCAA8193E423A00EC09A5 /* MAPAnnotation.m */,
 				D5932F81192FD38700E7BC8C /* GTAAppDelegate.h */,
 				D5932F82192FD38700E7BC8C /* GTAAppDelegate.m */,
 				D50FCA471938D7A700EC09A5 /* GTASingleton.h */,
@@ -322,6 +331,7 @@
 				D5932FBC1934D14200E7BC8C /* GTASignUpViewController.m in Sources */,
 				D5932F83192FD38700E7BC8C /* GTAAppDelegate.m in Sources */,
 				D5932FC31935466E00E7BC8C /* GTATableViewCell.m in Sources */,
+				D50FCAA9193E423A00EC09A5 /* MAPAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

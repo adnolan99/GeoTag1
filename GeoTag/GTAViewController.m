@@ -14,7 +14,11 @@
 
 #import <CoreLocation/CoreLocation.h>
 
-@interface GTAViewController () <CLLocationManagerDelegate>
+#import <MapKit/MapKit.h>
+
+#import "MAPAnnotation.h"
+
+@interface GTAViewController () <CLLocationManagerDelegate, MKMapViewDelegate>
 
 @end
 
@@ -22,7 +26,8 @@
 {
     
     
-    
+    MKMapView * myMapView;
+
     
     
     CLLocationManager * lManager;
@@ -38,7 +43,7 @@
     CLLocation * lastLocation;
     
     
-    UIButton * fakeRadar;
+    UIButton * mineWasTrippedTest;
     
     UIView * targets;
     
@@ -116,6 +121,37 @@
     NSLog(@"lastLocation : %@", lastLocation);
     for (CLLocation * location in locations)
     {
+        
+        //////MAP/////////
+        //sets marker to current location
+        MAPAnnotation * annotation = [[MAPAnnotation alloc]initWithCoordinate:location.coordinate];
+        
+        //adds marker to mapView
+        [myMapView addAnnotation:annotation];
+        
+        //moves map to center on current location
+        [myMapView setCenterCoordinate:location.coordinate animated:YES];
+        
+        //Will move map to current region
+        //MKCoordinateRegion region = mapView.region;
+        
+        //specifies where & how much to zoom in
+        MKCoordinateRegion region = MKCoordinateRegionMake(location.coordinate, MKCoordinateSpanMake(1.0, 1.0));
+        
+        //Set custom subtitles like callSign+mine
+        //annotation.title = @"Title";
+        //annotation.subtitle = @"Subtitle";
+        
+        region.span = MKCoordinateSpanMake(0.08, 0.08);
+        
+        [myMapView setRegion:region animated:YES];
+        
+
+        ////////MAP//////////
+        
+        
+        
+        
         currentLocation = location;
         NSLog(@"currentLocation : %@", currentLocation);
         CLGeocoder * geoCoder = [[CLGeocoder alloc]init];
@@ -138,12 +174,48 @@
             [userLocation saveInBackground];
             NSLog(@"Parse geoPoint : %@",geoPoint);
 
+            PFQuery * mineQuery = [PFQuery queryWithClassName:@"MineLocationLog"];
+            [mineQuery orderByDescending:@"createdAt"];
+            [mineQuery whereKey:@"parent" notEqualTo:[PFUser currentUser]];
+            [mineQuery whereKey:@"LocationOfMine" nearGeoPoint:geoPoint withinKilometers:1];
+            [mineQuery whereKey:(@"updatedAt") greaterThanOrEqualTo:[NSDate dateWithTimeIntervalSinceNow:-60 * 2]];
+            
+            [mineQuery findObjectsInBackgroundWithBlock:^(NSArray *mineObjects, NSError *error)
+             {
+                 NSLog(@"User searching for Mine : %@",mineObjects);
+
+                 for (PFObject * isMineThere in mineObjects)
+                 {
+                     PFUser * parent = isMineThere[@"parent"];
+                     
+                     if ((parent != [PFUser currentUser][@"parent"])) //&& (parent != nil))
+                 
+                     {
+                     [self tripMine];
+
+                 }
+                 else
+                 {
+                     return;
+                 }
+                 };
+             
+             
+             
+             
+             }];
+            
+            
+            
+            
+            
             //At this point must also query parse to see who is near new location
             PFQuery * query =[PFQuery queryWithClassName:@"UserLocationLog"];
             [query orderByDescending:@"createdAt"];
             [query whereKey:@"parent" notEqualTo:[PFUser currentUser]];
             [query whereKey:@"CurrentLocation" nearGeoPoint:geoPoint withinKilometers:1.0];
             [query whereKey:(@"updatedAt") greaterThanOrEqualTo:[NSDate dateWithTimeIntervalSinceNow:-60 * 20]];
+            
             [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
             {
                 NSLog(@"%@",objects);
@@ -155,26 +227,32 @@
                 {
                     PFUser * parent = userLocation[@"parent"];
                     
-//                    NSLog(@"%@",parent.objectId);
-                    
                     [parent fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
                         
+                    
                         PFUser * callSign = (PFUser *)object[@"callSign"];
                         
                         NSLog(@"%@", callSign);
 
-                    
+                        
                         // singleton add user to mutable array
-                        
+                        //Adding object to mutable array of enemies in proximity
                         [[GTASingleton sharedData].enemiesInProximity addObject:object];
-//
+                        
+                        
                         // trigger tableview to reload
-                        
 //                        NSArray * newEnemies = [GTASingleton sharedData].enemiesInProximity;
-                        
 //                        [gtaTVC.tableView addConstraints:newEnemies];
                         
                         [gtaTVC.tableView reloadData];
+                        
+                        
+                        
+                        
+                        
+                        //this will search the enemiseInProximity array for duplicates
+//                        if (![[GTASingleton sharedData].enemiesInProximity containsObject:object])
+//                            [[GTASingleton sharedData].enemiesInProximity addObject:object];
 
                     }];
                     
@@ -209,6 +287,13 @@
 }
 
 
+-(void)tripMine
+{
+    mineWasTrippedTest = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 10, 10)];
+    mineWasTrippedTest.backgroundColor = [UIColor redColor];
+    [self.view addSubview:mineWasTrippedTest];
+    
+}
 
 
 
@@ -219,22 +304,26 @@
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = YES;
 
-    
-    fakeRadar = [[UIButton alloc]initWithFrame:CGRectMake(60, 50, 200, 200)];
-    fakeRadar.backgroundColor = [UIColor blueColor];
-    fakeRadar.layer.cornerRadius = 100;
-    [self.view addSubview:fakeRadar];
-    
-    
-    
-    
+////////layMineButton///////////
+//    layMineButton = [[UIButton alloc]initWithFrame:CGRectMake(20, 75, 30, 30)];
+//    layMineButton.backgroundColor = [UIColor blueColor];
+//    layMineButton.layer.cornerRadius = 15;
+//    [layMineButton addTarget:self action:@selector(layMine) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [self.view addSubview:layMineButton];
     
     
     
+    myMapView = [[MKMapView alloc]initWithFrame:CGRectMake(60, 50, 200,200)];
+    
+    myMapView.delegate = self;
+    
+    [self.view addSubview:myMapView];
+    
+    
+    
+
     targets = [[UITableView alloc]initWithFrame:CGRectMake(-3, ((SCREEN_HEIGHT / 5)*3), self.view.frame.size.width, (SCREEN_HEIGHT/2))];
-    
-    
-    
     [targets addSubview:gtaTVC.view];
     
     
@@ -249,6 +338,150 @@
     
     // Do any additional setup after loading the view.
 }
+
+
+
+
+
+
+
+//////////touch to drop mine////////////////
+-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    MKAnnotationView * annotationView =[mapView dequeueReusableAnnotationViewWithIdentifier:@"annotationView"];
+    
+    if (annotationView == nil)
+    {
+        //initializing and defining the info within the annotationView (the info) ***always need an annotation, don't necessarily always need an annotationView***
+        annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"annotationView"];
+    } else {
+        //reset annotationView property to new annotation location
+        annotationView.annotation = annotation;
+    }
+    
+    //Make your pin a specific picture
+    //annotationView.image = [UIImage imageNamed:@"NAME OF IMAGE FILE"];
+    
+    annotationView.draggable = YES;
+    annotationView.canShowCallout = YES;
+    
+    return annotationView;
+}
+
+
+-(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    NSLog(@"%@", view.annotation.title);
+    
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    
+}
+
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    
+    
+    //CLLocation * pinLocation;
+    
+    
+    for (UITouch * touch in touches)
+    {
+        
+        CGPoint location = [touch locationInView:myMapView];
+        
+        CLLocationCoordinate2D coordinate = [myMapView convertPoint:location toCoordinateFromView:myMapView];
+        
+        
+        //moves map to center on current location
+        [myMapView setCenterCoordinate:coordinate animated:YES];
+        
+        
+        //sets marker to current location
+        MAPAnnotation * annotation = [[MAPAnnotation alloc]initWithCoordinate:coordinate];
+        
+        //adds marker to mapView
+        [myMapView addAnnotation:annotation];
+        
+        
+        
+        
+        
+        CLGeocoder * geoCoder = [[CLGeocoder alloc]init];
+        CLLocation * newMineLocation = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
+        
+        [geoCoder reverseGeocodeLocation:newMineLocation completionHandler:^(NSArray *placemarks, NSError *error)
+         {
+             
+             //NSLog(@"%@", placemarks);
+//             
+//             for (CLPlacemark * placemark in placemarks)
+//             {
+             
+                 //NSLog(@"%@",placemark.country);
+                 
+                 //setting cityState variable to City and State for respective keys for annotation
+//                 NSString * cityState = [NSString stringWithFormat:@"%@, %@",placemark.addressDictionary[@"City"],placemark.addressDictionary[@"State"]];
+//                 
+//                 [annotation setTitle:cityState];
+//                 
+//                 [annotation setTitle:placemark.country];
+                 
+                 
+                 
+                 
+                 ////log mine in Parse
+                 PFObject * mineLocation = [PFObject objectWithClassName:@"MineLocationLog"];
+                 //CLLocationCoordinate2D coordinate = [location coordinate];
+                 PFGeoPoint * geoPoint = [PFGeoPoint geoPointWithLatitude:newMineLocation.coordinate.latitude
+                                                                longitude:newMineLocation.coordinate.longitude];
+                 //PFGeoPoint * gpLatitude = [PFGeoPoint location.coordinate.latitude];
+                 mineLocation[@"parent"]= [PFUser currentUser];
+                 mineLocation[@"LocationOfMine"] = geoPoint;
+                 //userLocation[@"Latitude"] = currentLocation.coordinate.latitude;
+                 //            mineLocation[@"Country"] =
+                 //            mineLocation[@"State"] =
+                 //            mineLocation[@"City"] =
+                 [mineLocation saveInBackground];
+                 
+                 
+                 PFQuery * query =[PFQuery queryWithClassName:@"UserLocationLog"];
+                 [query orderByDescending:@"createdAt"];
+                 [query whereKey:@"parent" notEqualTo:[PFUser currentUser]];
+                 [query whereKey:@"CurrentLocation" nearGeoPoint:geoPoint withinKilometers:1];
+                 [query whereKey:(@"updatedAt") greaterThanOrEqualTo:[NSDate dateWithTimeIntervalSinceNow:-60 * 2]];
+                 
+                 [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+                  {
+                      
+                      if (objects != nil)
+                      {
+                          [self tripMine];
+                          
+                      }
+                      else
+                      {
+                          return;
+                      }
+                      
+                      
+                      
+                      
+                      NSLog(@"Mine searching for user : %@",objects);
+                  }];
+                 
+             //}
+         }];
+        
+    }
+}
+
+//////////touch to drop mine//////////////
+
+
 
 - (void)didReceiveMemoryWarning
 {

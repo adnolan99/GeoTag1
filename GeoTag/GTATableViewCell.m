@@ -64,20 +64,20 @@
 }
 
 //
--(void)setProfile: (PFObject *)enemyProfile
-{
-    _enemyProfile = enemyProfile;
-    
-    displayCallSign.text = [enemyProfile objectForKey:@"callSign"];
-
-    NSLog(@"TVCell log %@", displayCallSign.text);
-    
-    
-    
-    //NSDictionary * enemy = [GTASingleton sharedData].enemiesInProximity[index];
-    //displayCallSign.text = enemy[@"callSign"];
-
-}
+//-(void)setProfile: (PFObject *)enemyProfile
+//{
+//    _enemyProfile = enemyProfile;
+//    
+//    displayCallSign.text = [enemyProfile objectForKey:@"callSign"];
+//
+//    NSLog(@"TVCell log %@", displayCallSign.text);
+//    
+//    
+//    
+//    //NSDictionary * enemy = [GTASingleton sharedData].enemiesInProximity[index];
+//    //displayCallSign.text = enemy[@"callSign"];
+//
+//}
 
 
 

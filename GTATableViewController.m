@@ -148,12 +148,6 @@
     
     if (cell == nil) cell = [[GTATableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     
-    
-
-    
-    
-    
-    
     //comment out, not sure what this is doing
     //[cell resetLayout];
     //cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -163,11 +157,11 @@
     
     
     NSDictionary * enemy = [GTASingleton sharedData].enemiesInProximity[indexPath.row];
-//
-//    cell.textLabel.text = enemy[@"callSign"];
+
+    cell.textLabel.text = enemy[@"callSign"];
     
     
-    cell.enemyProfile = enemy;
+   // cell.enemyProfile = enemy;
     
     
     
