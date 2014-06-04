@@ -48,7 +48,7 @@
     UIView * targets;
     
     GTATableViewController * gtaTVC;
-    
+    PFObject * userScore;
 
 }
 
@@ -96,6 +96,15 @@
         
         
         
+        userScore = [PFObject objectWithClassName:@"UserPointsLog"];
+        userScore[@"parent"]= [PFUser currentUser];
+        
+        [userScore setObject:[NSNumber numberWithInt:100] forKey:@"points"];
+        [userScore saveInBackground];
+        
+        
+        
+        
 //        This is a hardcoded test user
 //        CLLocation * testUser1Location = [[CLLocation alloc]initWithLatitude:37.788 longitude:-122.409];
 //        CLGeocoder * geoCoder1 = [[CLGeocoder alloc]init];
@@ -111,6 +120,12 @@
         // Custom initialization
     }
     return self;
+
+
+
+
+
+
 }
 
 
@@ -142,7 +157,7 @@
         //annotation.title = @"Title";
         //annotation.subtitle = @"Subtitle";
         
-        region.span = MKCoordinateSpanMake(0.08, 0.08);
+        region.span = MKCoordinateSpanMake(0.04, 0.04);
         
         [myMapView setRegion:region animated:YES];
         
@@ -184,14 +199,20 @@
              {
                  NSLog(@"User searching for Mine : %@",mineObjects);
 
-                 for (PFObject * isMineThere in mineObjects)
+                 for (PFObject * userLookForMine in mineObjects)
                  {
-                     PFUser * parent = isMineThere[@"parent"];
+                     PFUser * parent = userLookForMine[@"parent"];
                      
                      if ((parent != [PFUser currentUser][@"parent"])) //&& (parent != nil))
                  
                      {
-                     [self tripMine];
+                         
+
+//                         Increment mine setters score by +10
+//                         [parent incrementKey:@"points" byAmount:[NSNumber numberWithInt:10]];
+//                         [parent saveInBackground];
+                         
+                         [self tripMine];
 
                  }
                  else
@@ -292,6 +313,17 @@
     mineWasTrippedTest = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 10, 10)];
     mineWasTrippedTest.backgroundColor = [UIColor redColor];
     [self.view addSubview:mineWasTrippedTest];
+    
+    [userScore incrementKey:@"points" byAmount:[NSNumber numberWithInt:-10]];
+    [userScore saveInBackground];
+    
+    
+    
+    
+
+    
+    [userScore incrementKey:@"points" byAmount:[NSNumber numberWithInt:10]];
+    [userScore saveInBackground];
     
 }
 
@@ -457,16 +489,21 @@
                  [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
                   {
                       
-                      if (objects != nil)
+                      for (PFObject * mineLookForUser in objects)
                       {
-                          [self tripMine];
+                          PFUser * parent = mineLookForUser[@"parent"];
                           
-                      }
+                          if ((parent != [PFUser currentUser][@"parent"])) //&& (parent != nil))
+                              
+                          {
+                              [self tripMine];
+                              
+                          }
                       else
                       {
                           return;
                       }
-                      
+                      }
                       
                       
                       
