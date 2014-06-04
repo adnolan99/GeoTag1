@@ -63,6 +63,7 @@
     return self;
 }
 
+
 //
 //-(void)setProfile: (PFObject *)enemyProfile
 //{
@@ -78,7 +79,6 @@
 //    //displayCallSign.text = enemy[@"callSign"];
 //
 //}
-
 
 
 

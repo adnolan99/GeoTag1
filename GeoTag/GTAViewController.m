@@ -45,10 +45,15 @@
     
     UIButton * mineWasTrippedTest;
     
+    UIButton * testButton;
+
+    
     UIView * targets;
     
     GTATableViewController * gtaTVC;
     PFObject * userScore;
+    
+    MAPAnnotation * mineAnnotation;
 
 }
 
@@ -66,12 +71,11 @@
         
         
         gtaTVC = [[GTATableViewController alloc] initWithStyle:UITableViewStylePlain];
+    
+        gtaTVC.view.frame = CGRectMake(0, 300, self.view.frame.size.width, self.view.frame.size.height);
         
         
         
-        [UITableView animateWithDuration:0.2 animations:^{
-            gtaTVC.view.frame = CGRectMake(0, 300, self.view.frame.size.width, self.view.frame.size.height);
-        }];
         [self.navigationController pushViewController:gtaTVC animated:YES];
 //        self.navigationController.toolbarHidden = YES;
         self.navigationController.navigationBarHidden = YES;
@@ -128,6 +132,14 @@
 
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    
+}
+
+
+
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
@@ -157,7 +169,7 @@
         //annotation.title = @"Title";
         //annotation.subtitle = @"Subtitle";
         
-        region.span = MKCoordinateSpanMake(0.04, 0.04);
+        region.span = MKCoordinateSpanMake(0.02, 0.02);
         
         [myMapView setRegion:region animated:YES];
         
@@ -208,7 +220,7 @@
                      {
                          
 
-//                         Increment mine setters score by +10
+//                         Need to increment mine setters score by +10
 //                         [parent incrementKey:@"points" byAmount:[NSNumber numberWithInt:10]];
 //                         [parent saveInBackground];
                          
@@ -243,10 +255,23 @@
             
                 //Need to cycle through objects array, and query parse for the objectId's that it retruns in order to get, the call sign, username, avatar
                 
-            
+    
+                // create enemy id mutable array
+                NSMutableArray * enemyIdArray = [@[]mutableCopy];
+                
+                
                 for (PFObject * userLocation in objects)
                 {
                     PFUser * parent = userLocation[@"parent"];
+                    
+                    // if parent.objectId is in enemy array "continue"
+                    if ([enemyIdArray containsObject:parent.objectId])
+                    {
+                        continue;
+                    }
+                    
+                    // add parent.objectId to enemy id array
+                    [enemyIdArray addObject:parent.objectId];
                     
                     [parent fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
                         
@@ -269,7 +294,7 @@
                         
                         
                         
-                        
+                        NSLog(@"%@",[GTASingleton sharedData].enemiesInProximity);
                         
                         //this will search the enemiseInProximity array for duplicates
 //                        if (![[GTASingleton sharedData].enemiesInProximity containsObject:object])
@@ -280,12 +305,7 @@
                     
                     
                     
-                    //Don't need this 2nd query b/c there is a built in way to retrive data, see fetch call above
-//                    PFQuery * query2 = [PFQuery queryWithClassName:@"User"];
-//                    [query2 getObjectInBackgroundWithId:parent.objectId block:^(PFObject * user, NSError *error)
-//                    {
-//                        // Do something with the returned PFObject in the gameScore variable.
-//                        NSLog(@"%@", user);
+                   
 //                    }];
                     
                     
@@ -308,9 +328,16 @@
 }
 
 
+
+
+
+
+
+
+
 -(void)tripMine
 {
-    mineWasTrippedTest = [[UIButton alloc]initWithFrame:CGRectMake(10, 10, 10, 10)];
+    mineWasTrippedTest = [[UIButton alloc]initWithFrame:CGRectMake(10, 0, 10, 10)];
     mineWasTrippedTest.backgroundColor = [UIColor redColor];
     [self.view addSubview:mineWasTrippedTest];
     
@@ -318,12 +345,7 @@
     [userScore saveInBackground];
     
     
-    
-    
 
-    
-    [userScore incrementKey:@"points" byAmount:[NSNumber numberWithInt:10]];
-    [userScore saveInBackground];
     
 }
 
@@ -336,6 +358,20 @@
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = YES;
 
+    
+    
+    
+    //////button to test//////
+    testButton = [[UIButton alloc]initWithFrame:CGRectMake(1, 25, 10, 10)];
+    testButton.backgroundColor = [UIColor redColor];
+    [testButton addTarget:self action:@selector(moveToAttackMode) forControlEvents:UIControlEventTouchUpInside];
+
+    [self.view addSubview:testButton];
+    
+    
+    
+    
+    
 ////////layMineButton///////////
 //    layMineButton = [[UIButton alloc]initWithFrame:CGRectMake(20, 75, 30, 30)];
 //    layMineButton.backgroundColor = [UIColor blueColor];
@@ -346,7 +382,8 @@
     
     
     
-    myMapView = [[MKMapView alloc]initWithFrame:CGRectMake(60, 50, 200,200)];
+    myMapView = [[MKMapView alloc]initWithFrame:CGRectMake(0, 30, self.view.frame.size.width,275)];
+    
     
     myMapView.delegate = self;
     
@@ -355,8 +392,12 @@
     
     
 
-    targets = [[UITableView alloc]initWithFrame:CGRectMake(-3, ((SCREEN_HEIGHT / 5)*3), self.view.frame.size.width, (SCREEN_HEIGHT/2))];
-    [targets addSubview:gtaTVC.view];
+//    targets = [[UITableView alloc]initWithFrame:CGRectMake(-3, ((SCREEN_HEIGHT / 5)*3), self.view.frame.size.width, (SCREEN_HEIGHT/2))];
+//    [targets addSubview:gtaTVC.view];
+    
+    
+    
+    
     
     
     
@@ -371,6 +412,25 @@
     // Do any additional setup after loading the view.
 }
 
+-(void)moveToAttackMode
+{
+   
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        myMapView.frame = CGRectMake(0, 30, self.view.frame.size.width/2, self.view.frame.size.width/2);
+    }];
+    
+    
+    NSLog(@"press");
+    
+    [UITableView animateWithDuration:0.2 animations:^{
+        gtaTVC.view.frame = CGRectMake(0, self.view.frame.size.height + 10, self.view.frame.size.width, self.view.frame.size.height);
+    }];
+    
+}
+
+
+
 
 
 
@@ -382,17 +442,45 @@
 {
     MKAnnotationView * annotationView =[mapView dequeueReusableAnnotationViewWithIdentifier:@"annotationView"];
     
+    ///trying to get avatars for mines and user to display differently below
+//
+//    MKAnnotationView * mineAnnotationView = [[MKAnnotationView alloc] initWithAnnotation:mineAnnotation reuseIdentifier:@"mineAnnotationView"];
+
+//    if (annotationView == currentLocation)
+//    {
+//        //initializing and defining the info within the annotationView (the info) ***always need an annotation, don't necessarily always need an annotationView***
+//        annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"annotationView"];
+//        annotationView.image = [UIImage imageNamed:@"angry_5.png"];
+//
+//        
+//    } else {
+//        //reset annotationView property to new annotation location
+//        annotationView = mineAnnotationView;
+//        mineAnnotationView.image = [UIImage imageNamed:@"mine.png"];
+//    
+//    }
+    
+    
+    
+    
+    
+
+    ////use below to return to red pin///////
     if (annotationView == nil)
     {
         //initializing and defining the info within the annotationView (the info) ***always need an annotation, don't necessarily always need an annotationView***
         annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"annotationView"];
+    
+    
     } else {
         //reset annotationView property to new annotation location
         annotationView.annotation = annotation;
     }
     
+    
+    
     //Make your pin a specific picture
-    //annotationView.image = [UIImage imageNamed:@"NAME OF IMAGE FILE"];
+    //annotationView.image = [UIImage imageNamed:@"angry_5.png"];
     
     annotationView.draggable = YES;
     annotationView.canShowCallout = YES;
@@ -433,10 +521,17 @@
         
         
         //sets marker to current location
-        MAPAnnotation * annotation = [[MAPAnnotation alloc]initWithCoordinate:coordinate];
+        mineAnnotation = [[MAPAnnotation alloc]initWithCoordinate:coordinate];
+        
+        
+        
+//        MKAnnotationView * mineAnnotationView = [[MKAnnotationView alloc] initWithAnnotation:mineAnnotation reuseIdentifier:nil];
+//        mineAnnotationView.image = [UIImage imageNamed:@"mine.png"];
+
+        
         
         //adds marker to mapView
-        [myMapView addAnnotation:annotation];
+        [myMapView addAnnotation:mineAnnotation];
         
         
         

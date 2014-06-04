@@ -173,6 +173,12 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    
+}
+
 
 /*
 // Override to support conditional editing of the table view.
