@@ -14,6 +14,8 @@
 
 #import "GTASingleton.h"
 
+#import "GTAViewController.h"
+
 #import <Parse/Parse.h>
 
 @interface GTATableViewController () <CLLocationManagerDelegate>
@@ -42,10 +44,13 @@
     CLLocation * lastLocation;
     
     GTATableViewController * gtaTVC;
-
+    
+    GTAViewController * gtaVC;
+    
+    
     UIImage * avatar;
     
-    
+    NSDictionary * profile;
     
 //    UILabel * currentLocation;
     
@@ -155,26 +160,40 @@
     //cell.delegate = self;
     
     
-    
-    NSDictionary * enemy = [GTASingleton sharedData].enemiesInProximity[indexPath.row];
+    profile = [GTASingleton sharedData].enemiesInProximity[indexPath.row];
 
-    cell.textLabel.text = enemy[@"callSign"];
+    //cell.textLabel.text = enemy[@"callSign"];
     
     
-   // cell.enemyProfile = enemy;
+   cell.profile = profile;
     
     
     
     
     
-    self.tableView.rowHeight = 100;
+    self.tableView.rowHeight = 200;
 
     
     return cell;
 }
 
+
+
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    NSLog(@"DSRAIP profile : %@", profile);
+    
+    
+    [self.delegate moveToAttackMode:self passThroughDictionary:profile];
+
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+
+    
+    //PFObject * profile = [profile objectAtIndex:indexPath.row];
+    
+    
     
     
 }

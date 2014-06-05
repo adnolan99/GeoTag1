@@ -18,7 +18,7 @@
 
 #import "MAPAnnotation.h"
 
-@interface GTAViewController () <CLLocationManagerDelegate, MKMapViewDelegate>
+@interface GTAViewController () <CLLocationManagerDelegate, MKMapViewDelegate,GTATableViewControllerDelegate>
 
 @end
 
@@ -54,6 +54,12 @@
     PFObject * userScore;
     
     MAPAnnotation * mineAnnotation;
+    
+    
+    UILabel * attackDisplayCallsign;
+    UILabel * attackDisplayUsername;
+    UIButton * backButton;
+
 
 }
 
@@ -71,17 +77,19 @@
         
         
         gtaTVC = [[GTATableViewController alloc] initWithStyle:UITableViewStylePlain];
-    
-        gtaTVC.view.frame = CGRectMake(0, 300, self.view.frame.size.width, self.view.frame.size.height);
+        gtaTVC.delegate = self;
+
+        gtaTVC.tableView.frame = CGRectMake(0, 300, self.view.frame.size.width, [UIScreen mainScreen].bounds.size.height - 320);
         
         
-        
+        //gtaTVC.view.frame = CGRectMake(0, 300, self.view.frame.size.width, self.view.frame.size.height);
+
         [self.navigationController pushViewController:gtaTVC animated:YES];
 //        self.navigationController.toolbarHidden = YES;
         self.navigationController.navigationBarHidden = YES;
         
         
-        [self.view addSubview:gtaTVC.view];
+        [self.view addSubview:gtaTVC.tableView];
         
         
         
@@ -132,11 +140,7 @@
 
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    
-}
+
 
 
 
@@ -412,9 +416,13 @@
     // Do any additional setup after loading the view.
 }
 
--(void)moveToAttackMode
+-(void)moveToAttackMode:(GTATableViewController *)VC passThroughDictionary:(NSDictionary *)profile
+
 {
    
+
+    
+    NSLog(@"MTAM profile : %@", profile);
     
     [UIView animateWithDuration:0.2 animations:^{
         myMapView.frame = CGRectMake(0, 30, self.view.frame.size.width/2, self.view.frame.size.width/2);
@@ -427,8 +435,52 @@
         gtaTVC.view.frame = CGRectMake(0, self.view.frame.size.height + 10, self.view.frame.size.width, self.view.frame.size.height);
     }];
     
+    
+    attackDisplayCallsign = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH -100, 60, 100, 20)];
+    attackDisplayCallsign.text = [profile objectForKey: @"callSign"];
+    
+    attackDisplayUsername = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH -100, 90, 100, 20)];
+    attackDisplayUsername.text = [profile objectForKey: @"username"];
+
+    
+    
+    backButton = [[UIButton alloc]initWithFrame:CGRectMake (0, (self.view.frame.size.width/2)+10, self.view.frame.size.width/2, 30)];
+    backButton.layer.cornerRadius = 5;
+    backButton.backgroundColor = [UIColor blackColor];
+    [backButton setTitle:@"Back" forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(backToScanMode) forControlEvents:UIControlEventTouchUpInside];
+
+    
+    [self.view addSubview:attackDisplayCallsign];
+    [self.view addSubview:attackDisplayUsername];
+    [self.view addSubview:backButton];
+
+    
 }
 
+-(void)backToScanMode
+{
+    
+    
+    
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        myMapView.frame = CGRectMake(0, 30, self.view.frame.size.width, 275);
+    }];
+    
+    NSLog(@"press");
+    
+    [UITableView animateWithDuration:0.2 animations:^{
+        gtaTVC.view.frame = CGRectMake(0, 300, self.view.frame.size.width, [UIScreen mainScreen].bounds.size.height - 320);
+    }];
+    
+    
+    [attackDisplayCallsign removeFromSuperview];
+    [attackDisplayUsername removeFromSuperview];
+    [backButton removeFromSuperview];
+    
+    
+}
 
 
 

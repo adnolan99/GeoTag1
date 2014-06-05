@@ -29,17 +29,18 @@
         
         
         
-        displayUserAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, 10, 10)];
+        displayUserAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
         displayUserAvatar.backgroundColor = [UIColor redColor];
+        
         [self.contentView addSubview:displayUserAvatar];
         
-//        
-//        displayUserName = [[UILabel alloc] initWithFrame:CGRectMake(30, 0, 10, 10)];
-//        displayUserName.textColor = [UIColor blackColor];
-//        displayUserName.font = [UIFont systemFontOfSize:20];
-//        [self.contentView addSubview:displayUserName];
+
+        displayUserName = [[UILabel alloc] initWithFrame:CGRectMake(60, 25, 50, 20)];
+        displayUserName.textColor = [UIColor blackColor];
+        displayUserName.font = [UIFont systemFontOfSize:20];
+        [self.contentView addSubview:displayUserName];
         
-        displayCallSign = [[UILabel alloc] initWithFrame:CGRectMake(30, 15, 50, 20)];
+        displayCallSign = [[UILabel alloc] initWithFrame:CGRectMake(60, 0, 50, 20)];
         displayCallSign.textColor = [UIColor greenColor];
         displayCallSign.backgroundColor = [UIColor blueColor];
         displayCallSign.font = [UIFont systemFontOfSize:20];
@@ -47,10 +48,10 @@
 
         
     
-//        displayDistance = [[UILabel alloc] initWithFrame:CGRectMake(80, 285, 220, 40)];
-//        displayDistance.textColor = [UIColor blackColor];
-//        displayDistance.font = [UIFont systemFontOfSize:20];
-//        [self.contentView addSubview:displayDistance];
+        displayDistance = [[UILabel alloc] initWithFrame:CGRectMake(0, 55, 50, 20)];
+        displayDistance.textColor = [UIColor blackColor];
+        displayDistance.font = [UIFont systemFontOfSize:20];
+        [self.contentView addSubview:displayDistance];
         
         
         
@@ -64,21 +65,25 @@
 }
 
 
-//
-//-(void)setProfile: (PFObject *)enemyProfile
-//{
-//    _enemyProfile = enemyProfile;
-//    
-//    displayCallSign.text = [enemyProfile objectForKey:@"callSign"];
-//
-//    NSLog(@"TVCell log %@", displayCallSign.text);
-//    
-//    
-//    
-//    //NSDictionary * enemy = [GTASingleton sharedData].enemiesInProximity[index];
-//    //displayCallSign.text = enemy[@"callSign"];
-//
-//}
+
+-(void)setProfile: (PFObject *)profile
+{
+    _profile = profile;
+    
+    
+    displayCallSign.text = [profile objectForKey:@"callSign"];
+    displayUserName.text = [profile objectForKey:@"username"];
+
+    displayDistance.text = [profile objectForKey:@"userName"];
+
+    NSLog(@"TVCell log %@", displayCallSign.text);
+    
+    
+    
+    //NSDictionary * enemy = [GTASingleton sharedData].enemiesInProximity[index];
+    //displayCallSign.text = enemy[@"callSign"];
+
+}
 
 
 
