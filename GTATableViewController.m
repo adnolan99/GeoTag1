@@ -171,7 +171,7 @@
     
     
     
-    self.tableView.rowHeight = 200;
+    self.tableView.rowHeight = 100;
 
     
     return cell;

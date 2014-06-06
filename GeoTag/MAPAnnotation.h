@@ -19,6 +19,7 @@
 
 @property (nonatomic, readonly, copy) NSString * subtitle;
 
+@property (nonatomic) UIImage * marker;
 
 - (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate;
 - (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate;

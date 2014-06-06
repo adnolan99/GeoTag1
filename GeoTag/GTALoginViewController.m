@@ -14,7 +14,7 @@
 
 #import <Parse/Parse.h>
 
-@interface GTALoginViewController ()
+@interface GTALoginViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @end
 
@@ -28,6 +28,11 @@
     UIButton * loginButton;
 
     UIButton * signUpButton;
+
+    UIButton * chooseAvatar;
+    
+    UIImagePickerController * photoLibrary;
+
 
     
 }
@@ -46,6 +51,16 @@
     }
     return self;
 }
+
+-(void)hideKeyboard
+{
+    
+    [userName resignFirstResponder];
+    [password resignFirstResponder];
+    
+
+}
+
 
 - (void)viewDidLoad
 {
@@ -67,9 +82,11 @@
     password.secureTextEntry =YES;
     password.placeholder = @"Password";
     password.tintColor = [UIColor lightGrayColor];
+    [password resignFirstResponder];
+
     [self.view addSubview:password];
     
-    loginButton = [[UIButton alloc]initWithFrame:CGRectMake(85, 240, 150, 50)];
+    loginButton = [[UIButton alloc]initWithFrame:CGRectMake(85, 275, 150, 50)];
     [loginButton addTarget:self action:@selector(loginToVC) forControlEvents:UIControlEventTouchUpInside];
     [loginButton setTitle:@"Login" forState:UIControlStateNormal];
     loginButton.layer.cornerRadius = 15;
@@ -79,13 +96,20 @@
     [self.view addSubview:loginButton];
     
     
-    signUpButton = [[UIButton alloc] initWithFrame:CGRectMake(85,300, 150, 50)];
+    signUpButton = [[UIButton alloc] initWithFrame:CGRectMake(85,370, 150, 50)];
     signUpButton.layer.cornerRadius = 15;
     [signUpButton setTitle:@"Sign Up" forState:UIControlStateNormal];
     signUpButton.backgroundColor = [UIColor blackColor];
     [signUpButton addTarget:self action:@selector(showSignUp) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:signUpButton];
     
+    
+    chooseAvatar = [[UIButton alloc] initWithFrame:CGRectMake(85,240, 150, 25)];
+    chooseAvatar.layer.cornerRadius = 10;
+    [chooseAvatar setTitle:@"Select Avatar" forState:UIControlStateNormal];
+    chooseAvatar.backgroundColor = [UIColor blackColor];
+    [chooseAvatar addTarget:self action:@selector(chooseAvatar) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:chooseAvatar];
     
     
     
@@ -100,6 +124,46 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+-(void)chooseAvatar
+{
+    NSLog(@"press");
+    
+    photoLibrary = [[UIImagePickerController alloc] init];
+    
+    photoLibrary.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    photoLibrary.allowsEditing = YES;
+    photoLibrary.delegate = self;
+    
+    [self presentViewController:photoLibrary animated:YES completion:nil];
+    //[self saveAvatar];
+
+}
+
+
+//-(void)saveAvatar
+//{
+//    //    connect current user to newsSelfy as parent : Parse "relational data"
+//    
+//    NSData * imageData = UIImagePNGRepresentation(selfyFrame.image);
+//
+//    PFFile * imageFile = [PFFile fileWithName:@"image.png" data:imageData];
+//    
+//    PFObject * avatar = [PFObject objectWithClassName:@"User"];
+//    
+//    avatar[@"image"] = imageFile;
+//    
+//    avatar[@"parent"]= [PFUser currentUser];
+//    
+//    [avatar saveInBackground];
+//    
+//    [avatar saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//        NSLog(@"%hhd",succeeded);
+//        
+//    }];
+//   
+//}
 
 
 -(void)loginToVC

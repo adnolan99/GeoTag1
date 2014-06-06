@@ -28,12 +28,9 @@
     
     MKMapView * myMapView;
 
-    
-    
     CLLocationManager * lManager;
     
     UITableView * enemies;
-    
     
     //NSMutableArray * enemiesInProximity;
     
@@ -42,25 +39,21 @@
     CLLocation * currentLocation;
     CLLocation * lastLocation;
     
-    
     UIButton * mineWasTrippedTest;
     
     UIButton * testButton;
 
-    
     UIView * targets;
     
     GTATableViewController * gtaTVC;
     PFObject * userScore;
     
-    MAPAnnotation * mineAnnotation;
-    
+    //MAPAnnotation * mineAnnotation;
     
     UILabel * attackDisplayCallsign;
     UILabel * attackDisplayUsername;
+    UILabel * attackDisplayDistance;
     UIButton * backButton;
-
-
 }
 
 
@@ -69,18 +62,10 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         
-      
-        
-        
-        
-        
-        
-        
         gtaTVC = [[GTATableViewController alloc] initWithStyle:UITableViewStylePlain];
         gtaTVC.delegate = self;
 
         gtaTVC.tableView.frame = CGRectMake(0, 300, self.view.frame.size.width, [UIScreen mainScreen].bounds.size.height - 320);
-        
         
         //gtaTVC.view.frame = CGRectMake(0, 300, self.view.frame.size.width, self.view.frame.size.height);
 
@@ -88,14 +73,9 @@
 //        self.navigationController.toolbarHidden = YES;
         self.navigationController.navigationBarHidden = YES;
         
-        
         [self.view addSubview:gtaTVC.tableView];
         
-        
-        
         [GTASingleton sharedData].enemiesInProximity = [@[] mutableCopy];
-        
-        
         
         lManager = [[CLLocationManager alloc]init];
         
@@ -103,59 +83,30 @@
         
         lManager.distanceFilter = 1;
         lManager.desiredAccuracy = kCLLocationAccuracyBest;
-        
+
         [lManager startUpdatingLocation];
-        
-        
         
         userScore = [PFObject objectWithClassName:@"UserPointsLog"];
         userScore[@"parent"]= [PFUser currentUser];
-        
+
         [userScore setObject:[NSNumber numberWithInt:100] forKey:@"points"];
         [userScore saveInBackground];
-        
-        
-        
-        
-//        This is a hardcoded test user
-//        CLLocation * testUser1Location = [[CLLocation alloc]initWithLatitude:37.788 longitude:-122.409];
-//        CLGeocoder * geoCoder1 = [[CLGeocoder alloc]init];
-//
-//        
-//        
-//        [geoCoder1 reverseGeocodeLocation:testUser1Location completionHandler:^(NSArray * friendly1, NSError *error)
-//         {
-//             //NSLog(@"This is testUser1Location %@", friendly1);
-//             
-//         }];
-        
-        // Custom initialization
     }
     return self;
-
-
-
-
-
-
 }
-
-
-
-
 
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    
     lastLocation = currentLocation;
     NSLog(@"lastLocation : %@", lastLocation);
     for (CLLocation * location in locations)
     {
-        
         //////MAP/////////
         //sets marker to current location
         MAPAnnotation * annotation = [[MAPAnnotation alloc]initWithCoordinate:location.coordinate];
+        
+//        annotation.marker = [UIImage imageNamed:@"avatar"];
         
         //adds marker to mapView
         [myMapView addAnnotation:annotation];
@@ -177,11 +128,7 @@
         
         [myMapView setRegion:region animated:YES];
         
-
         ////////MAP//////////
-        
-        
-        
         
         currentLocation = location;
         NSLog(@"currentLocation : %@", currentLocation);
@@ -222,29 +169,18 @@
                      if ((parent != [PFUser currentUser][@"parent"])) //&& (parent != nil))
                  
                      {
-                         
-
 //                         Need to increment mine setters score by +10
 //                         [parent incrementKey:@"points" byAmount:[NSNumber numberWithInt:10]];
 //                         [parent saveInBackground];
                          
                          [self tripMine];
-
                  }
                  else
                  {
                      return;
                  }
                  };
-             
-             
-             
-             
              }];
-            
-            
-            
-            
             
             //At this point must also query parse to see who is near new location
             PFQuery * query =[PFQuery queryWithClassName:@"UserLocationLog"];
@@ -255,7 +191,7 @@
             
             [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
             {
-                NSLog(@"%@",objects);
+                NSLog(@"Searching for enemies returning objects %@",objects);
             
                 //Need to cycle through objects array, and query parse for the objectId's that it retruns in order to get, the call sign, username, avatar
                 
@@ -271,19 +207,22 @@
                     // if parent.objectId is in enemy array "continue"
                     if ([enemyIdArray containsObject:parent.objectId])
                     {
+                        NSLog(@"THIS IS THE parent.objectID %@",parent.objectId);
+                        
                         continue;
+                        
                     }
-                    
+
                     // add parent.objectId to enemy id array
                     [enemyIdArray addObject:parent.objectId];
                     
                     [parent fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
                         
-                    
+                        
                         PFUser * callSign = (PFUser *)object[@"callSign"];
                         
                         NSLog(@"%@", callSign);
-
+                        
                         
                         // singleton add user to mutable array
                         //Adding object to mutable array of enemies in proximity
@@ -291,8 +230,8 @@
                         
                         
                         // trigger tableview to reload
-//                        NSArray * newEnemies = [GTASingleton sharedData].enemiesInProximity;
-//                        [gtaTVC.tableView addConstraints:newEnemies];
+                        //                        NSArray * newEnemies = [GTASingleton sharedData].enemiesInProximity;
+                        //                        [gtaTVC.tableView addConstraints:newEnemies];
                         
                         [gtaTVC.tableView reloadData];
                         
@@ -301,21 +240,12 @@
                         NSLog(@"%@",[GTASingleton sharedData].enemiesInProximity);
                         
                         //this will search the enemiseInProximity array for duplicates
-//                        if (![[GTASingleton sharedData].enemiesInProximity containsObject:object])
-//                            [[GTASingleton sharedData].enemiesInProximity addObject:object];
-
+                        //                        if (![[GTASingleton sharedData].enemiesInProximity containsObject:object])
+                        //                            [[GTASingleton sharedData].enemiesInProximity addObject:object];
+                        
                     }];
-                    
-                    
-                    
-                    
-                   
 //                    }];
-                    
-                    
-                    
-                    
-                    
+
                     //[gtaTVC.view addConstraints:[GTASingleton sharedData].enemyProfiles];
                 
                 }
@@ -332,13 +262,6 @@
 }
 
 
-
-
-
-
-
-
-
 -(void)tripMine
 {
     mineWasTrippedTest = [[UIButton alloc]initWithFrame:CGRectMake(10, 0, 10, 10)];
@@ -347,14 +270,7 @@
     
     [userScore incrementKey:@"points" byAmount:[NSNumber numberWithInt:-10]];
     [userScore saveInBackground];
-    
-    
-
-    
 }
-
-
-
 
 
 -(void)viewDidLoad
@@ -362,72 +278,29 @@
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = YES;
 
-    
-    
-    
-    //////button to test//////
-    testButton = [[UIButton alloc]initWithFrame:CGRectMake(1, 25, 10, 10)];
-    testButton.backgroundColor = [UIColor redColor];
-    [testButton addTarget:self action:@selector(moveToAttackMode) forControlEvents:UIControlEventTouchUpInside];
-
-    [self.view addSubview:testButton];
-    
-    
-    
-    
-    
-////////layMineButton///////////
-//    layMineButton = [[UIButton alloc]initWithFrame:CGRectMake(20, 75, 30, 30)];
-//    layMineButton.backgroundColor = [UIColor blueColor];
-//    layMineButton.layer.cornerRadius = 15;
-//    [layMineButton addTarget:self action:@selector(layMine) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    [self.view addSubview:layMineButton];
-    
-    
-    
     myMapView = [[MKMapView alloc]initWithFrame:CGRectMake(0, 30, self.view.frame.size.width,275)];
-    
     
     myMapView.delegate = self;
     
     [self.view addSubview:myMapView];
     
-    
-    
-
 //    targets = [[UITableView alloc]initWithFrame:CGRectMake(-3, ((SCREEN_HEIGHT / 5)*3), self.view.frame.size.width, (SCREEN_HEIGHT/2))];
 //    [targets addSubview:gtaTVC.view];
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     //gtaTVC = [[GTATableViewController alloc]initWithNibName:nil bundle:nil];
 //    gtaTVC = [[GTATableViewController alloc]initWithStyle:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - ((SCREEN_HEIGHT / 3)*2))];
     //[self.view addSubview:gtaTVC];
     
-    
     // Do any additional setup after loading the view.
 }
+
 
 -(void)moveToAttackMode:(GTATableViewController *)VC passThroughDictionary:(NSDictionary *)profile
 
 {
-   
-
-    
-    NSLog(@"MTAM profile : %@", profile);
-    
     [UIView animateWithDuration:0.2 animations:^{
         myMapView.frame = CGRectMake(0, 30, self.view.frame.size.width/2, self.view.frame.size.width/2);
     }];
-    
     
     NSLog(@"press");
     
@@ -435,16 +308,17 @@
         gtaTVC.view.frame = CGRectMake(0, self.view.frame.size.height + 10, self.view.frame.size.width, self.view.frame.size.height);
     }];
     
-    
     attackDisplayCallsign = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH -100, 60, 100, 20)];
     attackDisplayCallsign.text = [profile objectForKey: @"callSign"];
     
     attackDisplayUsername = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH -100, 90, 100, 20)];
     attackDisplayUsername.text = [profile objectForKey: @"username"];
 
+    attackDisplayDistance = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH -100, 120, 100, 20)];
+    attackDisplayDistance.text = [profile objectForKey: @"email"];
+
     
-    
-    backButton = [[UIButton alloc]initWithFrame:CGRectMake (0, (self.view.frame.size.width/2)+10, self.view.frame.size.width/2, 30)];
+    backButton = [[UIButton alloc]initWithFrame:CGRectMake (5, (self.view.frame.size.height - 35), self.view.frame.size.width - 10, 30)];
     backButton.layer.cornerRadius = 5;
     backButton.backgroundColor = [UIColor blackColor];
     [backButton setTitle:@"Back" forState:UIControlStateNormal];
@@ -453,17 +327,13 @@
     
     [self.view addSubview:attackDisplayCallsign];
     [self.view addSubview:attackDisplayUsername];
+    [self.view addSubview:attackDisplayDistance];
     [self.view addSubview:backButton];
-
-    
 }
+
 
 -(void)backToScanMode
 {
-    
-    
-    
-    
     [UIView animateWithDuration:0.2 animations:^{
         myMapView.frame = CGRectMake(0, 30, self.view.frame.size.width, 275);
     }];
@@ -474,49 +344,29 @@
         gtaTVC.view.frame = CGRectMake(0, 300, self.view.frame.size.width, [UIScreen mainScreen].bounds.size.height - 320);
     }];
     
-    
     [attackDisplayCallsign removeFromSuperview];
     [attackDisplayUsername removeFromSuperview];
+    [attackDisplayDistance removeFromSuperview];
     [backButton removeFromSuperview];
-    
-    
 }
-
-
-
-
-
-
 
 
 //////////touch to drop mine////////////////
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
+    
+    MAPAnnotation * annotationObj = (MAPAnnotation *)annotation;
+    
     MKAnnotationView * annotationView =[mapView dequeueReusableAnnotationViewWithIdentifier:@"annotationView"];
     
     ///trying to get avatars for mines and user to display differently below
 //
 //    MKAnnotationView * mineAnnotationView = [[MKAnnotationView alloc] initWithAnnotation:mineAnnotation reuseIdentifier:@"mineAnnotationView"];
-
-//    if (annotationView == currentLocation)
-//    {
-//        //initializing and defining the info within the annotationView (the info) ***always need an annotation, don't necessarily always need an annotationView***
-//        annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"annotationView"];
-//        annotationView.image = [UIImage imageNamed:@"angry_5.png"];
-//
-//        
-//    } else {
-//        //reset annotationView property to new annotation location
-//        annotationView = mineAnnotationView;
-//        mineAnnotationView.image = [UIImage imageNamed:@"mine.png"];
-//    
-//    }
     
+    //initializing and defining the info within the annotationView (the info) ***always need an annotation, don't necessarily always need an annotationView***
     
+    annotationView.image = annotationObj.marker;
     
-    
-    
-
     ////use below to return to red pin///////
     if (annotationView == nil)
     {
@@ -528,8 +378,6 @@
         //reset annotationView property to new annotation location
         annotationView.annotation = annotation;
     }
-    
-    
     
     //Make your pin a specific picture
     //annotationView.image = [UIImage imageNamed:@"angry_5.png"];
@@ -555,46 +403,34 @@
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    
-    
     //CLLocation * pinLocation;
-    
     
     for (UITouch * touch in touches)
     {
-        
         CGPoint location = [touch locationInView:myMapView];
         
         CLLocationCoordinate2D coordinate = [myMapView convertPoint:location toCoordinateFromView:myMapView];
         
-        
         //moves map to center on current location
         [myMapView setCenterCoordinate:coordinate animated:YES];
         
-        
         //sets marker to current location
-        mineAnnotation = [[MAPAnnotation alloc]initWithCoordinate:coordinate];
         
+        MAPAnnotation * mineAnnotation = [[MAPAnnotation alloc]initWithCoordinate:coordinate];
         
+//        mineAnnotation.marker = [UIImage imageNamed:@"mine"];
         
 //        MKAnnotationView * mineAnnotationView = [[MKAnnotationView alloc] initWithAnnotation:mineAnnotation reuseIdentifier:nil];
 //        mineAnnotationView.image = [UIImage imageNamed:@"mine.png"];
 
-        
-        
         //adds marker to mapView
         [myMapView addAnnotation:mineAnnotation];
-        
-        
-        
-        
         
         CLGeocoder * geoCoder = [[CLGeocoder alloc]init];
         CLLocation * newMineLocation = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
         
         [geoCoder reverseGeocodeLocation:newMineLocation completionHandler:^(NSArray *placemarks, NSError *error)
          {
-             
              //NSLog(@"%@", placemarks);
 //             
 //             for (CLPlacemark * placemark in placemarks)
@@ -608,10 +444,7 @@
 //                 [annotation setTitle:cityState];
 //                 
 //                 [annotation setTitle:placemark.country];
-                 
-                 
-                 
-                 
+             
                  ////log mine in Parse
                  PFObject * mineLocation = [PFObject objectWithClassName:@"MineLocationLog"];
                  //CLLocationCoordinate2D coordinate = [location coordinate];
@@ -626,7 +459,6 @@
                  //            mineLocation[@"City"] =
                  [mineLocation saveInBackground];
                  
-                 
                  PFQuery * query =[PFQuery queryWithClassName:@"UserLocationLog"];
                  [query orderByDescending:@"createdAt"];
                  [query whereKey:@"parent" notEqualTo:[PFUser currentUser]];
@@ -635,7 +467,6 @@
                  
                  [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
                   {
-                      
                       for (PFObject * mineLookForUser in objects)
                       {
                           PFUser * parent = mineLookForUser[@"parent"];
@@ -652,8 +483,6 @@
                       }
                       }
                       
-                      
-                      
                       NSLog(@"Mine searching for user : %@",objects);
                   }];
                  
@@ -666,15 +495,11 @@
 //////////touch to drop mine//////////////
 
 
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
-
 
 
 /*

@@ -36,20 +36,19 @@
         
 
         displayUserName = [[UILabel alloc] initWithFrame:CGRectMake(60, 25, 50, 20)];
-        displayUserName.textColor = [UIColor blackColor];
+        displayUserName.textColor = [UIColor blueColor];
         displayUserName.font = [UIFont systemFontOfSize:20];
         [self.contentView addSubview:displayUserName];
         
         displayCallSign = [[UILabel alloc] initWithFrame:CGRectMake(60, 0, 50, 20)];
         displayCallSign.textColor = [UIColor greenColor];
-        displayCallSign.backgroundColor = [UIColor blueColor];
         displayCallSign.font = [UIFont systemFontOfSize:20];
         [self.contentView addSubview:displayCallSign];
 
         
     
-        displayDistance = [[UILabel alloc] initWithFrame:CGRectMake(0, 55, 50, 20)];
-        displayDistance.textColor = [UIColor blackColor];
+        displayDistance = [[UILabel alloc] initWithFrame:CGRectMake(150, 0, 85, 20)];
+        displayDistance.textColor = [UIColor purpleColor];
         displayDistance.font = [UIFont systemFontOfSize:20];
         [self.contentView addSubview:displayDistance];
         
@@ -74,7 +73,7 @@
     displayCallSign.text = [profile objectForKey:@"callSign"];
     displayUserName.text = [profile objectForKey:@"username"];
 
-    displayDistance.text = [profile objectForKey:@"userName"];
+    displayDistance.text = [profile objectForKey:@"email"];
 
     NSLog(@"TVCell log %@", displayCallSign.text);
     

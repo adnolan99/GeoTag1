@@ -21,7 +21,6 @@
     
     UIView * signUpView;
     UIButton * signUpButton;
-    
     UIImageView * playerAvatar;
     NSArray * signUpFieldNames;
     
@@ -87,6 +86,8 @@
         signUpButton.layer.cornerRadius = 10;
         [signUpButton addTarget:self action:@selector(signUp) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:signUpButton];
+        
+        
     
     
     }
