@@ -20,6 +20,8 @@
 
 @interface GTAViewController () <CLLocationManagerDelegate, MKMapViewDelegate,GTATableViewControllerDelegate>
 
+@property (nonatomic) UIButton * toggled;
+
 @end
 
 @implementation GTAViewController
@@ -43,6 +45,11 @@
     
     UIButton * testButton;
 
+    UISwitch * mines;
+    UISwitch * rockets;
+    
+    
+    
     UIView * targets;
     
     GTATableViewController * gtaTVC;
@@ -61,6 +68,10 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        
+        mines.on = NO;
+        rockets.on = NO;
+        
         
         gtaTVC = [[GTATableViewController alloc] initWithStyle:UITableViewStylePlain];
         gtaTVC.delegate = self;
@@ -299,7 +310,7 @@
 
 {
     [UIView animateWithDuration:0.2 animations:^{
-        myMapView.frame = CGRectMake(0, 30, self.view.frame.size.width/2, self.view.frame.size.width/2);
+        myMapView.frame = CGRectMake(10, 40, self.view.frame.size.width -20, self.view.frame.size.width/2);
     }];
     
     NSLog(@"press");
@@ -308,7 +319,22 @@
         gtaTVC.view.frame = CGRectMake(0, self.view.frame.size.height + 10, self.view.frame.size.width, self.view.frame.size.height);
     }];
     
-    attackDisplayCallsign = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH -100, 60, 100, 20)];
+    mines = [[UISwitch alloc]initWithFrame:CGRectMake(50, self.view.frame.size.height - 85, 40, 40)];
+    mines.backgroundColor = [UIColor greenColor];
+    [mines addTarget:self action:@selector(toggleMines:) forControlEvents:UIControlEventTouchUpInside];
+
+    
+    
+    rockets = [[UISwitch alloc]initWithFrame:CGRectMake(250, self.view.frame.size.height - 85, 40, 40)];
+    rockets.backgroundColor = [UIColor redColor];
+    [rockets addTarget:self action:@selector(toggleRockets:) forControlEvents:UIControlEventTouchUpInside];
+
+    
+    
+    
+    
+    
+    attackDisplayCallsign = [[UILabel alloc]initWithFrame:CGRectMake(40, self.view.frame.size.width/2 + 100, 100, 20)];
     attackDisplayCallsign.text = [profile objectForKey: @"callSign"];
     
     attackDisplayUsername = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH -100, 90, 100, 20)];
@@ -328,6 +354,8 @@
     [self.view addSubview:attackDisplayCallsign];
     [self.view addSubview:attackDisplayUsername];
     [self.view addSubview:attackDisplayDistance];
+    [self.view addSubview:mines];
+    [self.view addSubview:rockets];
     [self.view addSubview:backButton];
 }
 
@@ -347,8 +375,42 @@
     [attackDisplayCallsign removeFromSuperview];
     [attackDisplayUsername removeFromSuperview];
     [attackDisplayDistance removeFromSuperview];
+    [mines removeFromSuperview];
+    [rockets removeFromSuperview];
+
+    
     [backButton removeFromSuperview];
 }
+
+
+    
+- (IBAction) toggleMines: (id) sender
+{
+    mines = (UISwitch *) sender;
+    if(mines.on)
+    {
+        // switch is on
+    }
+    else
+    {
+        // switch is off
+    }
+}
+
+- (IBAction) toggleRockets: (id) sender
+{
+    rockets = (UISwitch *) sender;
+    if(mines.on)
+    {
+        // switch is on
+    }
+    else
+    {
+        // switch is off
+    }
+}
+
+
 
 
 //////////touch to drop mine////////////////
