@@ -14,7 +14,7 @@
 
 #import <Parse/Parse.h>
 
-
+#import <Crashlytics/Crashlytics.h>
 
 @implementation GTAAppDelegate
 
@@ -54,6 +54,14 @@
     }
     
     self.window.rootViewController = gtaNavCon;
+    
+    
+    
+    [Crashlytics startWithAPIKey:@"71968bbdd73dd1560953cb8384a4ae51a34f5d93"];
+    //[[Crashlytics sharedInstance] crash];
+    
+
+    
     
     
     // Override point for customization after application launch.

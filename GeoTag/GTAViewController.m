@@ -20,7 +20,10 @@
 
 @interface GTAViewController () <CLLocationManagerDelegate, MKMapViewDelegate,GTATableViewControllerDelegate>
 
-@property (nonatomic) UIButton * toggled;
+@property (nonatomic) BOOL minesToggled;
+
+@property (nonatomic) BOOL rocketsToggled;
+
 
 @end
 
@@ -45,9 +48,10 @@
     
     UIButton * testButton;
 
-    UISwitch * mines;
-    UISwitch * rockets;
+    UIButton * mines;
+    UIButton * rockets;
     
+    NSString * userScoreString;
     
     
     UIView * targets;
@@ -57,9 +61,19 @@
     
     //MAPAnnotation * mineAnnotation;
     
-    UILabel * attackDisplayCallsign;
-    UILabel * attackDisplayUsername;
-    UILabel * attackDisplayDistance;
+    UILabel * avEnemyCallsign;
+    UILabel * avEnemyUsername;
+    UILabel * avEnemyDistance;
+    UILabel * avEnemyScore;
+    
+    UILabel * avUserCallsign;
+    UILabel * avUserUsername;
+    UILabel * avUserScore;
+
+    
+    UIImageView * userAvatar;
+    UIImageView * enemyAvatar;
+    
     UIButton * backButton;
 }
 
@@ -69,8 +83,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         
-        mines.on = NO;
-        rockets.on = NO;
+        _minesToggled = NO;
+        _rocketsToggled = NO;
         
         
         gtaTVC = [[GTATableViewController alloc] initWithStyle:UITableViewStylePlain];
@@ -99,9 +113,18 @@
         
         userScore = [PFObject objectWithClassName:@"UserPointsLog"];
         userScore[@"parent"]= [PFUser currentUser];
-
+        
         [userScore setObject:[NSNumber numberWithInt:100] forKey:@"points"];
         [userScore saveInBackground];
+    
+        userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(10, 30, 50, 50)];
+        userAvatar.backgroundColor = [UIColor blueColor];
+        
+        avUserCallsign = [[UILabel alloc]initWithFrame:CGRectMake(65, 30, 100, 40)];
+        avUserCallsign.text = [PFUser currentUser][@"callSign"];
+        [self.view addSubview:userAvatar];
+        [self.view addSubview:avUserCallsign];
+    
     }
     return self;
 }
@@ -156,8 +179,8 @@
             //PFGeoPoint * gpLatitude = [PFGeoPoint location.coordinate.latitude];
             userLocation[@"parent"]= [PFUser currentUser];
             userLocation[@"CurrentLocation"] = geoPoint;
-            //userLocation[@"Latitude"] = currentLocation.coordinate.latitude;
-//            userLocation[@"Country"] = 
+//            userLocation[@"Latitude"] = currentLocation.coordinate.latitude;
+//            userLocation[@"Country"] =
 //            userLocation[@"State"] =
 //            userLocation[@"City"] =
             [userLocation saveInBackground];
@@ -232,6 +255,10 @@
                         
                         PFUser * callSign = (PFUser *)object[@"callSign"];
                         
+                        
+                        
+
+                        
                         NSLog(@"%@", callSign);
                         
                         
@@ -275,9 +302,9 @@
 
 -(void)tripMine
 {
-    mineWasTrippedTest = [[UIButton alloc]initWithFrame:CGRectMake(10, 0, 10, 10)];
-    mineWasTrippedTest.backgroundColor = [UIColor redColor];
-    [self.view addSubview:mineWasTrippedTest];
+//    mineWasTrippedTest = [[UIButton alloc]initWithFrame:CGRectMake(10, 0, 10, 10)];
+//    mineWasTrippedTest.backgroundColor = [UIColor redColor];
+//    [self.view addSubview:mineWasTrippedTest];
     
     [userScore incrementKey:@"points" byAmount:[NSNumber numberWithInt:-10]];
     [userScore saveInBackground];
@@ -289,7 +316,7 @@
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = YES;
 
-    myMapView = [[MKMapView alloc]initWithFrame:CGRectMake(0, 30, self.view.frame.size.width,275)];
+    myMapView = [[MKMapView alloc]initWithFrame:CGRectMake(0, 60, self.view.frame.size.width,245)];
     
     myMapView.delegate = self;
     
@@ -319,41 +346,58 @@
         gtaTVC.view.frame = CGRectMake(0, self.view.frame.size.height + 10, self.view.frame.size.width, self.view.frame.size.height);
     }];
     
-    mines = [[UISwitch alloc]initWithFrame:CGRectMake(50, self.view.frame.size.height - 85, 40, 40)];
-    mines.backgroundColor = [UIColor greenColor];
-    [mines addTarget:self action:@selector(toggleMines:) forControlEvents:UIControlEventTouchUpInside];
+    mines = [[UIButton alloc]initWithFrame:CGRectMake(50, self.view.frame.size.height - 85, 40, 40)];
+    mines.backgroundColor = [UIColor grayColor];
+    [mines addTarget:self action:@selector(toggleMines) forControlEvents:UIControlEventTouchUpInside];
+
+    rockets = [[UIButton alloc]initWithFrame:CGRectMake(250, self.view.frame.size.height - 85, 40, 40)];
+    rockets.backgroundColor = [UIColor blackColor];
+    [rockets addTarget:self action:@selector(toggleRockets) forControlEvents:UIControlEventTouchUpInside];
+    
+    avEnemyCallsign = [[UILabel alloc]initWithFrame:CGRectMake(225, 250, 100, 40)];
+    avEnemyCallsign.text = [profile objectForKey: @"callSign"];
+    
+    avEnemyUsername = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH -100, 90, 100, 20)];
+    avEnemyUsername.text = [profile objectForKey: @"username"];
+
+    avEnemyDistance = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH -100, 120, 100, 20)];
+    avEnemyDistance.text = [profile objectForKey: @"email"];
 
     
-    
-    rockets = [[UISwitch alloc]initWithFrame:CGRectMake(250, self.view.frame.size.height - 85, 40, 40)];
-    rockets.backgroundColor = [UIColor redColor];
-    [rockets addTarget:self action:@selector(toggleRockets:) forControlEvents:UIControlEventTouchUpInside];
+    enemyAvatar = [[UIImageView alloc]initWithFrame:CGRectMake(225, 190, 60, 60)];
+    enemyAvatar.backgroundColor = [UIColor redColor];
+    //avEnemyScore
 
+    [UIImageView animateWithDuration:0.2 animations:^{
+        userAvatar.frame = CGRectMake(35, 190, 60, 60);
+    }];
     
+    [UILabel animateWithDuration:0.2 animations:^{
+        avUserCallsign.frame = CGRectMake(40, 250, 100, 40);
+    }];
     
+    avUserUsername = [[UILabel alloc]initWithFrame:CGRectMake(20, self.view.frame.size.width/2, 100, 40)];
+    avUserUsername.text = [PFUser currentUser][@"userName"];
     
-    
-    
-    attackDisplayCallsign = [[UILabel alloc]initWithFrame:CGRectMake(40, self.view.frame.size.width/2 + 100, 100, 20)];
-    attackDisplayCallsign.text = [profile objectForKey: @"callSign"];
-    
-    attackDisplayUsername = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH -100, 90, 100, 20)];
-    attackDisplayUsername.text = [profile objectForKey: @"username"];
+    avUserScore = [[UILabel alloc]initWithFrame:CGRectMake(40, 320, 70, 20)];
+    //avUserScore.text
 
-    attackDisplayDistance = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH -100, 120, 100, 20)];
-    attackDisplayDistance.text = [profile objectForKey: @"email"];
-
-    
     backButton = [[UIButton alloc]initWithFrame:CGRectMake (5, (self.view.frame.size.height - 35), self.view.frame.size.width - 10, 30)];
     backButton.layer.cornerRadius = 5;
     backButton.backgroundColor = [UIColor blackColor];
     [backButton setTitle:@"Back" forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(backToScanMode) forControlEvents:UIControlEventTouchUpInside];
 
+    [self.view addSubview:avEnemyCallsign];
+    [self.view addSubview:avEnemyUsername];
+    [self.view addSubview:avEnemyDistance];
+    [self.view addSubview:avEnemyScore];
+    [self.view addSubview:enemyAvatar];
     
-    [self.view addSubview:attackDisplayCallsign];
-    [self.view addSubview:attackDisplayUsername];
-    [self.view addSubview:attackDisplayDistance];
+    
+    [self.view addSubview:avUserUsername];
+    [self.view addSubview:avUserScore];
+
     [self.view addSubview:mines];
     [self.view addSubview:rockets];
     [self.view addSubview:backButton];
@@ -363,51 +407,74 @@
 -(void)backToScanMode
 {
     [UIView animateWithDuration:0.2 animations:^{
-        myMapView.frame = CGRectMake(0, 30, self.view.frame.size.width, 275);
+        myMapView.frame = CGRectMake(0, 60, self.view.frame.size.width,245);
     }];
-    
-    NSLog(@"press");
     
     [UITableView animateWithDuration:0.2 animations:^{
         gtaTVC.view.frame = CGRectMake(0, 300, self.view.frame.size.width, [UIScreen mainScreen].bounds.size.height - 320);
     }];
     
-    [attackDisplayCallsign removeFromSuperview];
-    [attackDisplayUsername removeFromSuperview];
-    [attackDisplayDistance removeFromSuperview];
-    [mines removeFromSuperview];
-    [rockets removeFromSuperview];
+    [UIImageView animateWithDuration:0.2 animations:^{
+        userAvatar.frame = CGRectMake(10, 30, 50, 50);
+    }];
+    
+    [UILabel animateWithDuration:0.2 animations:^{
+        avUserCallsign.frame = CGRectMake(65, 30, 100, 40);
+    }];
+
+    _minesToggled = NO;
+    _rocketsToggled = NO;
+    
+    [avEnemyCallsign removeFromSuperview];
+    [avEnemyUsername removeFromSuperview];
+    [avEnemyDistance removeFromSuperview];
+    [avEnemyScore removeFromSuperview];
+    [enemyAvatar removeFromSuperview];
 
     
+    [avUserUsername removeFromSuperview];
+    [avUserScore removeFromSuperview];
+    
+    [mines removeFromSuperview];
+    [rockets removeFromSuperview];
     [backButton removeFromSuperview];
 }
 
 
-    
-- (IBAction) toggleMines: (id) sender
+
+
+
+//////TURNING MINES AND ROCKETS ON AND OFF//////////////
+-(void)toggleMines
 {
-    mines = (UISwitch *) sender;
-    if(mines.on)
+    if((_minesToggled == NO) && (_rocketsToggled == NO))
     {
-        // switch is on
+        _minesToggled = YES;
+        mines.backgroundColor = [UIColor greenColor];
+        
     }
     else
     {
-        // switch is off
-    }
+        
+        _minesToggled = NO;
+        mines.backgroundColor = [UIColor grayColor];    }
 }
 
-- (IBAction) toggleRockets: (id) sender
+
+
+-(void)toggleRockets
 {
-    rockets = (UISwitch *) sender;
-    if(mines.on)
+    if((_rocketsToggled == NO) && (_minesToggled == NO))
     {
-        // switch is on
+        _rocketsToggled = YES;
+        rockets.backgroundColor = [UIColor redColor];
+    
     }
     else
     {
-        // switch is off
-    }
+        
+        _rocketsToggled = NO;
+        rockets.backgroundColor = [UIColor blackColor];    }
 }
 
 
@@ -416,6 +483,9 @@
 //////////touch to drop mine////////////////
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
+    
+    
+    
     
     MAPAnnotation * annotationObj = (MAPAnnotation *)annotation;
     
@@ -466,6 +536,12 @@
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     //CLLocation * pinLocation;
+    
+    
+    if (_minesToggled == YES) {
+        
+    
+    
     
     for (UITouch * touch in touches)
     {
@@ -552,8 +628,9 @@
          }];
         
     }
-}
 
+    }
+}
 //////////touch to drop mine//////////////
 
 

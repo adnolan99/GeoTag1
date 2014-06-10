@@ -39,6 +39,7 @@
 		D5932FBC1934D14200E7BC8C /* GTASignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5932FBB1934D14200E7BC8C /* GTASignUpViewController.m */; };
 		D5932FC01934D3B000E7BC8C /* GTALoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5932FBF1934D3B000E7BC8C /* GTALoginViewController.m */; };
 		D5932FC31935466E00E7BC8C /* GTATableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D5932FC21935466E00E7BC8C /* GTATableViewCell.m */; };
+		D593BBA419462C390021CCC1 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D593BBA319462C390021CCC1 /* Crashlytics.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,7 @@
 		D5932FBF1934D3B000E7BC8C /* GTALoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GTALoginViewController.m; path = GeoTag/GTALoginViewController.m; sourceTree = "<group>"; };
 		D5932FC11935466E00E7BC8C /* GTATableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTATableViewCell.h; sourceTree = "<group>"; };
 		D5932FC21935466E00E7BC8C /* GTATableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTATableViewCell.m; sourceTree = "<group>"; };
+		D593BBA319462C390021CCC1 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				D5932FB41934CB9400E7BC8C /* CoreLocation.framework in Frameworks */,
 				D5932FB21934CB7D00E7BC8C /* MobileCoreServices.framework in Frameworks */,
 				D5932FB01934CB7200E7BC8C /* QuartzCore.framework in Frameworks */,
+				D593BBA419462C390021CCC1 /* Crashlytics.framework in Frameworks */,
 				D5932FAE1934CB6900E7BC8C /* Security.framework in Frameworks */,
 				D5932FAC1934CB6200E7BC8C /* StoreKit.framework in Frameworks */,
 				D5932FAA1934CB5900E7BC8C /* SystemConfiguration.framework in Frameworks */,
@@ -165,6 +168,7 @@
 		D5932F71192FD38700E7BC8C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D593BBA319462C390021CCC1 /* Crashlytics.framework */,
 				D50FCAA5193E3F7400EC09A5 /* MapKit.framework */,
 				D5932FB71934CBB100E7BC8C /* AudioToolbox.framework */,
 				D5932FB51934CBA800E7BC8C /* CFNetwork.framework */,
@@ -254,6 +258,7 @@
 				D5932F6B192FD38700E7BC8C /* Sources */,
 				D5932F6C192FD38700E7BC8C /* Frameworks */,
 				D5932F6D192FD38700E7BC8C /* Resources */,
+				D593BBA219462BC70021CCC1 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -337,6 +342,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D593BBA219462BC70021CCC1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 71968bbdd73dd1560953cb8384a4ae51a34f5d93 f6c940aa066d1abee0bb8ac11bb2328694d2aa4a06e670938cfe9292da209001";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D5932F6B192FD38700E7BC8C /* Sources */ = {
