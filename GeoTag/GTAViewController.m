@@ -92,28 +92,21 @@
 
         gtaTVC.tableView.frame = CGRectMake(0, 300, self.view.frame.size.width, [UIScreen mainScreen].bounds.size.height - 320);
         
-        //gtaTVC.view.frame = CGRectMake(0, 300, self.view.frame.size.width, self.view.frame.size.height);
-
-        [self.navigationController pushViewController:gtaTVC animated:YES];
+//        [self.navigationController pushViewController:gtaTVC animated:YES];
 //        self.navigationController.toolbarHidden = YES;
-        self.navigationController.navigationBarHidden = YES;
         
         [self.view addSubview:gtaTVC.tableView];
         
         [GTASingleton sharedData].enemiesInProximity = [@[] mutableCopy];
         
         lManager = [[CLLocationManager alloc]init];
-        
         lManager.delegate = self;
-        
         lManager.distanceFilter = 1;
         lManager.desiredAccuracy = kCLLocationAccuracyBest;
-
         [lManager startUpdatingLocation];
         
         userScore = [PFObject objectWithClassName:@"UserPointsLog"];
         userScore[@"parent"]= [PFUser currentUser];
-        
         [userScore setObject:[NSNumber numberWithInt:100] forKey:@"points"];
         [userScore saveInBackground];
     
@@ -132,15 +125,20 @@
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
+    
+    
     lastLocation = currentLocation;
     NSLog(@"lastLocation : %@", lastLocation);
-    for (CLLocation * location in locations)
-    {
+
+    CLLocation * location = [locations lastObject];
+    
+//    for (CLLocation * location in locations)
+//    {
         //////MAP/////////
         //sets marker to current location
         MAPAnnotation * annotation = [[MAPAnnotation alloc]initWithCoordinate:location.coordinate];
         
-//        annotation.marker = [UIImage imageNamed:@"avatar"];
+        //annotation.marker = [UIImage imageNamed:@"avatar"];
         
         //adds marker to mapView
         [myMapView addAnnotation:annotation];
@@ -166,12 +164,21 @@
         
         currentLocation = location;
         NSLog(@"currentLocation : %@", currentLocation);
-        CLGeocoder * geoCoder = [[CLGeocoder alloc]init];
-        [geoCoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error)
-         {
+    
+    
+    
+//        CLGeocoder * geoCoder = [[CLGeocoder alloc]init];
+//        [geoCoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error)
+//         
+//    
+//         {
              NSLog(@"actualLocation : %@", location);
-        if (lastLocation != currentLocation)
+    
+    
+    
+    if (lastLocation != currentLocation)
         {
+            
             PFObject * userLocation = [PFObject objectWithClassName:@"UserLocationLog"];
             //CLLocationCoordinate2D coordinate = [location coordinate];
             PFGeoPoint * geoPoint = [PFGeoPoint geoPointWithLatitude:location.coordinate.latitude
@@ -216,6 +223,7 @@
                  };
              }];
             
+            
             //At this point must also query parse to see who is near new location
             PFQuery * query =[PFQuery queryWithClassName:@"UserLocationLog"];
             [query orderByDescending:@"createdAt"];
@@ -224,66 +232,79 @@
             [query whereKey:(@"updatedAt") greaterThanOrEqualTo:[NSDate dateWithTimeIntervalSinceNow:-60 * 20]];
             
             [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-            {
-                NSLog(@"Searching for enemies returning objects %@",objects);
+             {
+//                NSLog(@"Searching for enemies returning objects %@",objects);
             
                 //Need to cycle through objects array, and query parse for the objectId's that it retruns in order to get, the call sign, username, avatar
                 
-    
+                 
                 // create enemy id mutable array
                 NSMutableArray * enemyIdArray = [@[]mutableCopy];
                 
-                
-                for (PFObject * userLocation in objects)
+                for (PFObject * enemyLocation in objects)
                 {
-                    PFUser * parent = userLocation[@"parent"];
+                    
+                    PFGeoPoint * enemyGeo = enemyLocation[@""];
+                    
+                    //CLLocationDistance
+                    
+                    PFUser * parent = enemyLocation[@"parent"];
+                    
+                    
+//                    NSLog(@"THIS IS enemyLocation %@",enemyLocation);
+                    
+                    
                     
                     // if parent.objectId is in enemy array "continue"
                     if ([enemyIdArray containsObject:parent.objectId])
                     {
-                        NSLog(@"THIS IS THE parent.objectID %@",parent.objectId);
+                        
+//                        NSLog(@"THIS IS enemyIdArray %@",enemyIdArray);
+//                        
+//                        NSLog(@"THIS IS THE parent.objectID %@",parent.objectId);
+                        
+                        
                         
                         continue;
-                        
+                    
+                    
                     }
-
                     // add parent.objectId to enemy id array
                     [enemyIdArray addObject:parent.objectId];
                     
+                    
                     [parent fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
                         
-                        
                         PFUser * callSign = (PFUser *)object[@"callSign"];
+                    
+                        NSLog(@"THIS IS callSign %@", callSign);
                         
-                        
-                        
+//                        NSLog(@"THIS IS object %@", object);
 
                         
-                        NSLog(@"%@", callSign);
                         
                         
-                        // singleton add user to mutable array
-                        //Adding object to mutable array of enemies in proximity
+                        //Adding object to singleton mutable array of enemies in proximity
+//                        if (![[GTASingleton sharedData].enemiesInProximity containsObject:object]) [[GTASingleton     sharedData].enemiesInProximity addObject:object];
+                    
+                     
+                        //Adding object to singleton mutable array of enemies in proximity
+
                         [[GTASingleton sharedData].enemiesInProximity addObject:object];
                         
                         
                         // trigger tableview to reload
-                        //                        NSArray * newEnemies = [GTASingleton sharedData].enemiesInProximity;
-                        //                        [gtaTVC.tableView addConstraints:newEnemies];
-                        
                         [gtaTVC.tableView reloadData];
                         
-                        
-                        
-                        NSLog(@"%@",[GTASingleton sharedData].enemiesInProximity);
+                        NSLog(@"THIS IS THE singleton %@",[GTASingleton sharedData].enemiesInProximity);
                         
                         //this will search the enemiseInProximity array for duplicates
                         //                        if (![[GTASingleton sharedData].enemiesInProximity containsObject:object])
                         //                            [[GTASingleton sharedData].enemiesInProximity addObject:object];
-                        
+                    
                     }];
 //                    }];
-
+                    
                     //[gtaTVC.view addConstraints:[GTASingleton sharedData].enemyProfiles];
                 
                 }
@@ -295,9 +316,15 @@
             return;
         }
         
-         }];
-    }
+//         }];
+//    }
 }
+
+
+
+
+
+
 
 
 -(void)tripMine
@@ -354,12 +381,17 @@
     rockets.backgroundColor = [UIColor blackColor];
     [rockets addTarget:self action:@selector(toggleRockets) forControlEvents:UIControlEventTouchUpInside];
     
-    avEnemyCallsign = [[UILabel alloc]initWithFrame:CGRectMake(225, 250, 100, 40)];
+    avEnemyCallsign = [[UILabel alloc]initWithFrame:CGRectMake(230, 250, 100, 40)];
     avEnemyCallsign.text = [profile objectForKey: @"callSign"];
-    
-    avEnemyUsername = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH -100, 90, 100, 20)];
-    avEnemyUsername.text = [profile objectForKey: @"username"];
+    avEnemyCallsign.font = [UIFont systemFontOfSize:20];
 
+    
+    avEnemyUsername = [[UILabel alloc]initWithFrame:CGRectMake(225, 245, 100, 20)];
+    avEnemyUsername.text = [profile objectForKey: @"username"];
+    avEnemyUsername.font = [UIFont systemFontOfSize:10];
+
+    
+    
     avEnemyDistance = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH -100, 120, 100, 20)];
     avEnemyDistance.text = [profile objectForKey: @"email"];
 
@@ -523,7 +555,7 @@
 
 -(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
-    NSLog(@"%@", view.annotation.title);
+    NSLog(@"THIS IS view.annotation.title %@", view.annotation.title);
     
 }
 
@@ -537,12 +569,8 @@
 {
     //CLLocation * pinLocation;
     
-    
     if (_minesToggled == YES) {
         
-    
-    
-    
     for (UITouch * touch in touches)
     {
         CGPoint location = [touch locationInView:myMapView];

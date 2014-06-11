@@ -67,7 +67,8 @@
 //
 //        [self.view addConstraints:enemyProfilesArray];
 
-        
+        self.tableView.rowHeight = 100;
+
         // Custom initialization
     }
     return self;
@@ -78,7 +79,8 @@
     [super viewDidLoad];
     
     
-    
+    self.tableView.rowHeight = 100;
+
     
     
     
@@ -167,13 +169,6 @@
     
    cell.profile = profile;
     
-    
-    
-    
-    
-    self.tableView.rowHeight = 100;
-
-    
     return cell;
 }
 
@@ -183,7 +178,6 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSLog(@"DSRAIP profile : %@", profile);
     
     
     [self.delegate moveToAttackMode:self passThroughDictionary:profile];

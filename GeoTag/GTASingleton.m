@@ -47,7 +47,7 @@
     {
         self.enemiesInProximity = [@[]mutableCopy];
         
-        self.enemyProfiles = [@[]mutableCopy];
+        //self.enemyProfiles = [@[]mutableCopy];
 
     }
     

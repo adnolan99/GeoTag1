@@ -72,10 +72,8 @@
     
     displayCallSign.text = [profile objectForKey:@"callSign"];
     displayUserName.text = [profile objectForKey:@"username"];
-
     displayDistance.text = [profile objectForKey:@"email"];
 
-    NSLog(@"TVCell log %@", displayCallSign.text);
     
     
     
