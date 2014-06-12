@@ -75,6 +75,9 @@
     UIImageView * enemyAvatar;
     
     UIButton * backButton;
+    
+    
+    CLLocationDistance enemyDist;
 }
 
 
@@ -112,6 +115,8 @@
     
         userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(10, 30, 50, 50)];
         userAvatar.backgroundColor = [UIColor blueColor];
+        userAvatar.layer.cornerRadius = 25;
+
         
         avUserCallsign = [[UILabel alloc]initWithFrame:CGRectMake(65, 30, 100, 40)];
         avUserCallsign.text = [PFUser currentUser][@"callSign"];
@@ -132,14 +137,13 @@
 
     CLLocation * location = [locations lastObject];
     
-//    for (CLLocation * location in locations)
-//    {
+    for (CLLocation * location in locations)
+    {
         //////MAP/////////
         //sets marker to current location
         MAPAnnotation * annotation = [[MAPAnnotation alloc]initWithCoordinate:location.coordinate];
         
-        //annotation.marker = [UIImage imageNamed:@"avatar"];
-        
+    
         //adds marker to mapView
         [myMapView addAnnotation:annotation];
         
@@ -244,9 +248,15 @@
                 for (PFObject * enemyLocation in objects)
                 {
                     
-                    PFGeoPoint * enemyGeo = enemyLocation[@""];
                     
-                    //CLLocationDistance
+                    
+                    /////////trying to get distance//////////
+//                    CLLocation * enemyGeo = enemyLocation[@"CurrentLocation"];
+//                    
+//                    enemyDist = [location distanceFromLocation:enemyGeo];
+                    
+                    
+                    
                     
                     PFUser * parent = enemyLocation[@"parent"];
                     
@@ -317,14 +327,8 @@
         }
         
 //         }];
-//    }
+    }
 }
-
-
-
-
-
-
 
 
 -(void)tripMine
@@ -344,7 +348,7 @@
     self.navigationController.navigationBarHidden = YES;
 
     myMapView = [[MKMapView alloc]initWithFrame:CGRectMake(0, 60, self.view.frame.size.width,245)];
-    
+
     myMapView.delegate = self;
     
     [self.view addSubview:myMapView];
@@ -392,16 +396,21 @@
 
     
     
-    avEnemyDistance = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH -100, 120, 100, 20)];
-    avEnemyDistance.text = [profile objectForKey: @"email"];
+    avEnemyDistance = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/3,self.view.frame.size.height - 115, 200, 20)];
+    avEnemyDistance.text = [NSString stringWithFormat:@"%f", enemyDist];
+
 
     
     enemyAvatar = [[UIImageView alloc]initWithFrame:CGRectMake(225, 190, 60, 60)];
     enemyAvatar.backgroundColor = [UIColor redColor];
+    enemyAvatar.layer.cornerRadius = 30;
+    
+    
     //avEnemyScore
 
     [UIImageView animateWithDuration:0.2 animations:^{
         userAvatar.frame = CGRectMake(35, 190, 60, 60);
+        userAvatar.layer.cornerRadius = 30;
     }];
     
     [UILabel animateWithDuration:0.2 animations:^{
@@ -448,6 +457,8 @@
     
     [UIImageView animateWithDuration:0.2 animations:^{
         userAvatar.frame = CGRectMake(10, 30, 50, 50);
+        userAvatar.layer.cornerRadius = 25;
+
     }];
     
     [UILabel animateWithDuration:0.2 animations:^{

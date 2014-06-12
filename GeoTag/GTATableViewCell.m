@@ -15,10 +15,10 @@
 @implementation GTATableViewCell
 {
     
-    UIImageView * displayUserAvatar;
-    UILabel * displayUserName;
-    UILabel * displayCallSign;
-    UILabel * displayDistance;
+    UIImageView * displayEnemyAvatar;
+    UILabel * dispEnemyUserName;
+    UILabel * dispEnemyCallSign;
+    UILabel * dispEnemyDistance;
     
     
 }
@@ -29,28 +29,28 @@
         
         
         
-        displayUserAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-        displayUserAvatar.backgroundColor = [UIColor redColor];
-        
-        [self.contentView addSubview:displayUserAvatar];
+        displayEnemyAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(2, 5, 50, 50)];
+        displayEnemyAvatar.backgroundColor = [UIColor redColor];
+        displayEnemyAvatar.layer.cornerRadius = 25;
+        [self.contentView addSubview:displayEnemyAvatar];
         
 
-        displayUserName = [[UILabel alloc] initWithFrame:CGRectMake(60, 25, 50, 20)];
-        displayUserName.textColor = [UIColor blueColor];
-        displayUserName.font = [UIFont systemFontOfSize:20];
-        [self.contentView addSubview:displayUserName];
+        dispEnemyUserName = [[UILabel alloc] initWithFrame:CGRectMake(60, 25, 50, 20)];
+        dispEnemyUserName.textColor = [UIColor blueColor];
+        dispEnemyUserName.font = [UIFont systemFontOfSize:20];
+        [self.contentView addSubview:dispEnemyUserName];
         
-        displayCallSign = [[UILabel alloc] initWithFrame:CGRectMake(60, 0, 50, 20)];
-        displayCallSign.textColor = [UIColor greenColor];
-        displayCallSign.font = [UIFont systemFontOfSize:20];
-        [self.contentView addSubview:displayCallSign];
+        dispEnemyCallSign = [[UILabel alloc] initWithFrame:CGRectMake(60, 0, 50, 20)];
+        dispEnemyCallSign.textColor = [UIColor greenColor];
+        dispEnemyCallSign.font = [UIFont systemFontOfSize:20];
+        [self.contentView addSubview:dispEnemyCallSign];
 
         
     
-        displayDistance = [[UILabel alloc] initWithFrame:CGRectMake(150, 0, 85, 20)];
-        displayDistance.textColor = [UIColor purpleColor];
-        displayDistance.font = [UIFont systemFontOfSize:20];
-        [self.contentView addSubview:displayDistance];
+        dispEnemyDistance = [[UILabel alloc] initWithFrame:CGRectMake(150, 0, 85, 20)];
+        dispEnemyDistance.textColor = [UIColor purpleColor];
+        dispEnemyDistance.font = [UIFont systemFontOfSize:20];
+        [self.contentView addSubview:dispEnemyDistance];
         
         
         
@@ -70,9 +70,9 @@
     _profile = profile;
     
     
-    displayCallSign.text = [profile objectForKey:@"callSign"];
-    displayUserName.text = [profile objectForKey:@"username"];
-    displayDistance.text = [profile objectForKey:@"email"];
+    dispEnemyCallSign.text = [profile objectForKey:@"callSign"];
+    dispEnemyUserName.text = [profile objectForKey:@"username"];
+    //dispEnemyDistance.text = [profile objectForKey:@"NEED TO TO GET DISTANCE"];
 
     
     

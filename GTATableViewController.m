@@ -67,7 +67,7 @@
 //
 //        [self.view addConstraints:enemyProfilesArray];
 
-        self.tableView.rowHeight = 100;
+        //self.tableView.rowHeight = 100;
 
         // Custom initialization
     }
@@ -79,7 +79,7 @@
     [super viewDidLoad];
     
     
-    self.tableView.rowHeight = 100;
+    self.tableView.rowHeight = 75;
 
     
     
