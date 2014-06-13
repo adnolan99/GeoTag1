@@ -24,6 +24,7 @@
 
 @property (nonatomic) BOOL rocketsToggled;
 
+@property (nonatomic) BOOL attackModeActive;
 
 @end
 
@@ -78,6 +79,10 @@
     
     
     CLLocationDistance enemyDist;
+    
+    
+    
+    MKCoordinateRegion region;
 }
 
 
@@ -88,7 +93,7 @@
         
         _minesToggled = NO;
         _rocketsToggled = NO;
-        
+        _attackModeActive = NO;
         
         gtaTVC = [[GTATableViewController alloc] initWithStyle:UITableViewStylePlain];
         gtaTVC.delegate = self;
@@ -118,7 +123,7 @@
         userAvatar.layer.cornerRadius = 25;
 
         
-        avUserCallsign = [[UILabel alloc]initWithFrame:CGRectMake(65, 30, 100, 40)];
+        avUserCallsign = [[UILabel alloc]initWithFrame:CGRectMake(75, 30, 100, 40)];
         avUserCallsign.text = [PFUser currentUser][@"callSign"];
         [self.view addSubview:userAvatar];
         [self.view addSubview:avUserCallsign];
@@ -126,6 +131,8 @@
     }
     return self;
 }
+
+
 
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
@@ -154,13 +161,17 @@
         //MKCoordinateRegion region = mapView.region;
         
         //specifies where & how much to zoom in
-        MKCoordinateRegion region = MKCoordinateRegionMake(location.coordinate, MKCoordinateSpanMake(1.0, 1.0));
+        region = MKCoordinateRegionMake(location.coordinate, MKCoordinateSpanMake(1.0, 1.0));
         
         //Set custom subtitles like callSign+mine
         //annotation.title = @"Title";
         //annotation.subtitle = @"Subtitle";
         
-        region.span = MKCoordinateSpanMake(0.02, 0.02);
+        
+        
+        region.span = MKCoordinateSpanMake(0.1, 0.1);
+  
+        
         
         [myMapView setRegion:region animated:YES];
         
@@ -350,7 +361,8 @@
     myMapView = [[MKMapView alloc]initWithFrame:CGRectMake(0, 60, self.view.frame.size.width,245)];
 
     myMapView.delegate = self;
-    
+    myMapView.layer.cornerRadius = 0;
+
     [self.view addSubview:myMapView];
     
 //    targets = [[UITableView alloc]initWithFrame:CGRectMake(-3, ((SCREEN_HEIGHT / 5)*3), self.view.frame.size.width, (SCREEN_HEIGHT/2))];
@@ -367,8 +379,25 @@
 -(void)moveToAttackMode:(GTATableViewController *)VC passThroughDictionary:(NSDictionary *)profile
 
 {
+    
+    
+    _attackModeActive = YES;
+    
+    
+    if (_attackModeActive == YES)
+    {
+        region.span = MKCoordinateSpanMake(0.01, 0.01);
+        [myMapView setRegion:region animated:YES];
+
+    }
+    
+    
+    
     [UIView animateWithDuration:0.2 animations:^{
-        myMapView.frame = CGRectMake(10, 40, self.view.frame.size.width -20, self.view.frame.size.width/2);
+        myMapView.frame = CGRectMake(10, 60, self.view.frame.size.width - 20, 200);
+        myMapView.layer.cornerRadius = 110;
+        
+        
     }];
     
     NSLog(@"press");
@@ -401,24 +430,22 @@
 
 
     
-    enemyAvatar = [[UIImageView alloc]initWithFrame:CGRectMake(225, 190, 60, 60)];
+    enemyAvatar = [[UIImageView alloc]initWithFrame:CGRectMake(10, 220, 60, 60)];
     enemyAvatar.backgroundColor = [UIColor redColor];
     enemyAvatar.layer.cornerRadius = 30;
     
     
     //avEnemyScore
-
+//
     [UIImageView animateWithDuration:0.2 animations:^{
-        userAvatar.frame = CGRectMake(35, 190, 60, 60);
+        userAvatar.frame = CGRectMake(10, 30, 60, 60);
         userAvatar.layer.cornerRadius = 30;
     }];
+//
+//    [UILabel animateWithDuration:0.2 animations:^{
+//        avUserCallsign.frame = CGRectMake(40, 250, 100, 40);
+//    }];
     
-    [UILabel animateWithDuration:0.2 animations:^{
-        avUserCallsign.frame = CGRectMake(40, 250, 100, 40);
-    }];
-    
-    avUserUsername = [[UILabel alloc]initWithFrame:CGRectMake(20, self.view.frame.size.width/2, 100, 40)];
-    avUserUsername.text = [PFUser currentUser][@"userName"];
     
     avUserScore = [[UILabel alloc]initWithFrame:CGRectMake(40, 320, 70, 20)];
     //avUserScore.text
@@ -442,13 +469,32 @@
     [self.view addSubview:mines];
     [self.view addSubview:rockets];
     [self.view addSubview:backButton];
+
+
+
+
+
 }
 
 
 -(void)backToScanMode
 {
+    
+    _attackModeActive = NO;
+    
+    
+    
+    if (_attackModeActive == NO)
+    {
+        region.span = MKCoordinateSpanMake(0.1, 0.1);
+        [myMapView setRegion:region animated:YES];
+        
+    }
     [UIView animateWithDuration:0.2 animations:^{
         myMapView.frame = CGRectMake(0, 60, self.view.frame.size.width,245);
+        myMapView.layer.cornerRadius = 0;
+
+    
     }];
     
     [UITableView animateWithDuration:0.2 animations:^{
@@ -460,10 +506,10 @@
         userAvatar.layer.cornerRadius = 25;
 
     }];
-    
-    [UILabel animateWithDuration:0.2 animations:^{
-        avUserCallsign.frame = CGRectMake(65, 30, 100, 40);
-    }];
+//
+//    [UILabel animateWithDuration:0.2 animations:^{
+//        avUserCallsign.frame = CGRectMake(65, 30, 100, 40);
+//    }];
 
     _minesToggled = NO;
     _rocketsToggled = NO;

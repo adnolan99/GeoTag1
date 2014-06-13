@@ -26,7 +26,9 @@
     [Parse setApplicationId:@"USbRqmBruCCYTpUrj5Hi2mVlqJ6GsSiOwoGD7XNe"
                   clientKey:@"2MkmfJf0o76TcfFBsdenVCpY2mIjThz0BNCPo2jp"];
     
-    
+    [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
+     UIRemoteNotificationTypeAlert|
+     UIRemoteNotificationTypeSound];
     
     
     GTAViewController * gtaVC = [[GTAViewController alloc] initWithNibName:nil bundle:nil];
@@ -69,6 +71,24 @@
     [self.window makeKeyAndVisible];
     return YES;
 }
+
+- (void)application:(UIApplication *)application
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    // Store the deviceToken in the current installation and save it to Parse.
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setDeviceTokenFromData:deviceToken];
+    [currentInstallation saveInBackground];
+}
+
+- (void)application:(UIApplication *)application
+didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    [PFPush handlePush:userInfo];
+}
+
+
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
