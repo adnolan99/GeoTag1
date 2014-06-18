@@ -268,14 +268,18 @@
                     
                     
                     
+                    //////////Trying to add enemy to map//////////
+//                    CLLocation * enemyMapLocation = enemyLocation[@"CurrentLocation"];
+//                    MAPAnnotation * enemyAnnotation = [[MAPAnnotation alloc]initWithCoordinate:enemyMapLocation.coordinate];
+//                    [myMapView addAnnotation:enemyAnnotation];
+//                    pinView.pinColor = enemyAnnotation;
+                    
+                    
+                    
+                    
                     
                     PFUser * parent = enemyLocation[@"parent"];
-                    
-                    
 //                    NSLog(@"THIS IS enemyLocation %@",enemyLocation);
-                    
-                    
-                    
                     // if parent.objectId is in enemy array "continue"
                     if ([enemyIdArray containsObject:parent.objectId])
                     {
@@ -414,21 +418,12 @@
     rockets.backgroundColor = [UIColor blackColor];
     [rockets addTarget:self action:@selector(toggleRockets) forControlEvents:UIControlEventTouchUpInside];
     
-    avEnemyCallsign = [[UILabel alloc]initWithFrame:CGRectMake(230, 250, 100, 40)];
+    avEnemyCallsign = [[UILabel alloc]initWithFrame:CGRectMake(75, 250, 100, 40)];
     avEnemyCallsign.text = [profile objectForKey: @"callSign"];
     avEnemyCallsign.font = [UIFont systemFontOfSize:20];
-
-    
-    avEnemyUsername = [[UILabel alloc]initWithFrame:CGRectMake(225, 245, 100, 20)];
-    avEnemyUsername.text = [profile objectForKey: @"username"];
-    avEnemyUsername.font = [UIFont systemFontOfSize:10];
-
-    
     
     avEnemyDistance = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/3,self.view.frame.size.height - 115, 200, 20)];
     avEnemyDistance.text = [NSString stringWithFormat:@"%f", enemyDist];
-
-
     
     enemyAvatar = [[UIImageView alloc]initWithFrame:CGRectMake(10, 220, 60, 60)];
     enemyAvatar.backgroundColor = [UIColor redColor];
@@ -436,7 +431,8 @@
     
     
     //avEnemyScore
-//
+
+    
     [UIImageView animateWithDuration:0.2 animations:^{
         userAvatar.frame = CGRectMake(10, 30, 60, 60);
         userAvatar.layer.cornerRadius = 30;
@@ -469,10 +465,6 @@
     [self.view addSubview:mines];
     [self.view addSubview:rockets];
     [self.view addSubview:backButton];
-
-
-
-
 
 }
 
@@ -515,12 +507,10 @@
     _rocketsToggled = NO;
     
     [avEnemyCallsign removeFromSuperview];
-    [avEnemyUsername removeFromSuperview];
     [avEnemyDistance removeFromSuperview];
     [avEnemyScore removeFromSuperview];
     [enemyAvatar removeFromSuperview];
 
-    
     [avUserUsername removeFromSuperview];
     [avUserScore removeFromSuperview];
     
@@ -528,9 +518,6 @@
     [rockets removeFromSuperview];
     [backButton removeFromSuperview];
 }
-
-
-
 
 
 //////TURNING MINES AND ROCKETS ON AND OFF//////////////
@@ -544,11 +531,9 @@
     }
     else
     {
-        
         _minesToggled = NO;
         mines.backgroundColor = [UIColor grayColor];    }
 }
-
 
 
 -(void)toggleRockets
