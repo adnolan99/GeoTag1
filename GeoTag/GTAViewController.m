@@ -31,6 +31,9 @@
 @implementation GTAViewController
 {
     
+    UIImageView * headerFrame;
+
+    
     
     MKMapView * myMapView;
 
@@ -66,6 +69,8 @@
     UILabel * avEnemyUsername;
     UILabel * avEnemyDistance;
     UILabel * avEnemyScore;
+    UILabel * avEnemyLocation;
+
     
     UILabel * avUserCallsign;
     UILabel * avUserUsername;
@@ -369,6 +374,18 @@
 
     [self.view addSubview:myMapView];
     
+    
+    headerFrame = [[UIImageView alloc]initWithFrame:CGRectMake(200, 25, 100, 30)];
+    [headerFrame setImage: [UIImage imageNamed:@"battletag"]];
+    [self.view addSubview:headerFrame];
+    
+    
+    
+    
+    
+    
+    
+    
 //    targets = [[UITableView alloc]initWithFrame:CGRectMake(-3, ((SCREEN_HEIGHT / 5)*3), self.view.frame.size.width, (SCREEN_HEIGHT/2))];
 //    [targets addSubview:gtaTVC.view];
     
@@ -418,14 +435,32 @@
     rockets.backgroundColor = [UIColor blackColor];
     [rockets addTarget:self action:@selector(toggleRockets) forControlEvents:UIControlEventTouchUpInside];
     
-    avEnemyCallsign = [[UILabel alloc]initWithFrame:CGRectMake(75, 250, 100, 40)];
+    avEnemyCallsign = [[UILabel alloc]initWithFrame:CGRectMake(60, 275, 100, 40)];
     avEnemyCallsign.text = [profile objectForKey: @"callSign"];
-    avEnemyCallsign.font = [UIFont systemFontOfSize:20];
+    avEnemyCallsign.textColor = [UIColor greenColor];
+    avEnemyCallsign.font = [UIFont systemFontOfSize:24];
     
-    avEnemyDistance = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/3,self.view.frame.size.height - 115, 200, 20)];
-    avEnemyDistance.text = [NSString stringWithFormat:@"%f", enemyDist];
+    avEnemyDistance = [[UILabel alloc]initWithFrame:CGRectMake(205, 300, 85, 20)];
+    //avEnemyDistance.text = [NSString stringWithFormat:@"%f", enemyDist];
+    avEnemyDistance.textColor = [UIColor purpleColor];
+    avEnemyDistance.font = [UIFont systemFontOfSize:18];
+
+    //presentation purposes only//
+    avEnemyDistance.text = [NSString stringWithFormat:@"200 ft"];
+
     
-    enemyAvatar = [[UIImageView alloc]initWithFrame:CGRectMake(10, 220, 60, 60)];
+    avEnemyLocation = [[UILabel alloc] initWithFrame:CGRectMake(175, 275, 130, 20)];
+    avEnemyLocation.textColor = [UIColor purpleColor];
+    avEnemyLocation.font = [UIFont systemFontOfSize:20];
+    avEnemyLocation.text = [NSString stringWithFormat:@"Union Square"];
+    
+    avEnemyScore = [[UILabel alloc] initWithFrame:CGRectMake(125, 395, 85, 30)];
+    avEnemyScore.textColor = [UIColor orangeColor];
+    avEnemyScore.font = [UIFont systemFontOfSize:24];
+    avEnemyScore.text = [NSString stringWithFormat:@"255 pts"];
+    
+    
+    enemyAvatar = [[UIImageView alloc]initWithFrame:CGRectMake(10, 225, 60, 60)];
     enemyAvatar.backgroundColor = [UIColor redColor];
     enemyAvatar.layer.cornerRadius = 30;
     
@@ -457,8 +492,8 @@
     [self.view addSubview:avEnemyDistance];
     [self.view addSubview:avEnemyScore];
     [self.view addSubview:enemyAvatar];
-    
-    
+    [self.view addSubview:avEnemyLocation];
+
     [self.view addSubview:avUserUsername];
     [self.view addSubview:avUserScore];
 
@@ -510,7 +545,8 @@
     [avEnemyDistance removeFromSuperview];
     [avEnemyScore removeFromSuperview];
     [enemyAvatar removeFromSuperview];
-
+    [avEnemyLocation removeFromSuperview];
+    
     [avUserUsername removeFromSuperview];
     [avUserScore removeFromSuperview];
     

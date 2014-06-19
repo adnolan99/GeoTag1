@@ -39,6 +39,7 @@
 		D5932FC01934D3B000E7BC8C /* GTALoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5932FBF1934D3B000E7BC8C /* GTALoginViewController.m */; };
 		D5932FC31935466E00E7BC8C /* GTATableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D5932FC21935466E00E7BC8C /* GTATableViewCell.m */; };
 		D593BBA419462C390021CCC1 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D593BBA319462C390021CCC1 /* Crashlytics.framework */; };
+		D5CF7EC91951E88B00080B60 /* battletag.png in Resources */ = {isa = PBXBuildFile; fileRef = D5CF7EC81951E88B00080B60 /* battletag.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,7 @@
 		D5932FC11935466E00E7BC8C /* GTATableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTATableViewCell.h; sourceTree = "<group>"; };
 		D5932FC21935466E00E7BC8C /* GTATableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTATableViewCell.m; sourceTree = "<group>"; };
 		D593BBA319462C390021CCC1 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		D5CF7EC81951E88B00080B60 /* battletag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = battletag.png; path = ../../../Desktop/battletag.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +137,7 @@
 		D50FCAAA193F5CEE00EC09A5 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D5CF7EC81951E88B00080B60 /* battletag.png */,
 				D50FCAAD193F5D7A00EC09A5 /* yellow_1.png */,
 				D50FCAAB193F5D6000EC09A5 /* angry_5.png */,
 			);
@@ -325,6 +328,7 @@
 				D50FCAAC193F5D6000EC09A5 /* angry_5.png in Resources */,
 				D5932F7D192FD38700E7BC8C /* InfoPlist.strings in Resources */,
 				D5932F85192FD38700E7BC8C /* Images.xcassets in Resources */,
+				D5CF7EC91951E88B00080B60 /* battletag.png in Resources */,
 				D50FCAAE193F5D7A00EC09A5 /* yellow_1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

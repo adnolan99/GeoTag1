@@ -19,6 +19,8 @@
     UILabel * dispEnemyUserName;
     UILabel * dispEnemyCallSign;
     UILabel * dispEnemyDistance;
+    UILabel * dispEnemyLocation;
+
     
     
 }
@@ -35,24 +37,33 @@
         [self.contentView addSubview:displayEnemyAvatar];
         
 
-        dispEnemyUserName = [[UILabel alloc] initWithFrame:CGRectMake(60, 25, 50, 20)];
+        dispEnemyUserName = [[UILabel alloc] initWithFrame:CGRectMake(20, 55, 100, 20)];
         dispEnemyUserName.textColor = [UIColor blueColor];
-        dispEnemyUserName.font = [UIFont systemFontOfSize:20];
+        dispEnemyUserName.font = [UIFont systemFontOfSize:15];
         [self.contentView addSubview:dispEnemyUserName];
         
-        dispEnemyCallSign = [[UILabel alloc] initWithFrame:CGRectMake(60, 0, 50, 20)];
+        dispEnemyCallSign = [[UILabel alloc] initWithFrame:CGRectMake(65, 20, 100, 20)];
         dispEnemyCallSign.textColor = [UIColor greenColor];
-        dispEnemyCallSign.font = [UIFont systemFontOfSize:20];
+        dispEnemyCallSign.font = [UIFont systemFontOfSize:24];
         [self.contentView addSubview:dispEnemyCallSign];
 
         
     
-        dispEnemyDistance = [[UILabel alloc] initWithFrame:CGRectMake(150, 0, 85, 20)];
+        dispEnemyDistance = [[UILabel alloc] initWithFrame:CGRectMake(200, 40, 85, 20)];
         dispEnemyDistance.textColor = [UIColor purpleColor];
-        dispEnemyDistance.font = [UIFont systemFontOfSize:20];
+        dispEnemyDistance.font = [UIFont systemFontOfSize:18];
+        //dispEnemyDistance.text = [NSString stringWithFormat:@"%f", enemyDist];
+        dispEnemyDistance.text = [NSString stringWithFormat:@"200 ft"];
         [self.contentView addSubview:dispEnemyDistance];
         
         
+        dispEnemyLocation = [[UILabel alloc] initWithFrame:CGRectMake(170, 5, 130, 20)];
+        dispEnemyLocation.textColor = [UIColor purpleColor];
+        dispEnemyLocation.font = [UIFont systemFontOfSize:20];
+        dispEnemyLocation.text = [NSString stringWithFormat:@"Union Square"];
+
+        [self.contentView addSubview:dispEnemyLocation];
+
         
         
         

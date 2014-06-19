@@ -29,10 +29,13 @@
 
     UIButton * signUpButton;
 
-    UIButton * chooseAvatar;
+//    UIButton * chooseAvatar;
     
-    UIImagePickerController * photoLibrary;
-
+//    UIImagePickerController * photoLibrary;
+    
+    UIImageView * headerFrame;
+    
+    UIImage * headerImage;
 
     
 }
@@ -66,9 +69,9 @@
 {
     [super viewDidLoad];
     
-    userName = [[UITextField alloc] initWithFrame:CGRectMake(85, 120, 150, 50)];
+    userName = [[UITextField alloc] initWithFrame:CGRectMake(60, 120, 200, 40)];
     userName.backgroundColor = [UIColor colorWithWhite:0.1 alpha:.05];
-    userName.layer.cornerRadius = 10;
+    userName.layer.cornerRadius = 5;
     userName.placeholder = @"Username";
     userName.tintColor = [UIColor lightGrayColor];
     [userName resignFirstResponder];
@@ -76,9 +79,9 @@
     
     
     
-    password = [[UITextField alloc] initWithFrame:CGRectMake(85, 180, 150, 50)];
+    password = [[UITextField alloc] initWithFrame:CGRectMake(60, 180, 200, 40)];
     password.backgroundColor = [UIColor colorWithWhite:0.1 alpha:.05];
-    password.layer.cornerRadius = 15;
+    password.layer.cornerRadius = 5;
     password.secureTextEntry =YES;
     password.placeholder = @"Password";
     password.tintColor = [UIColor lightGrayColor];
@@ -86,33 +89,38 @@
 
     [self.view addSubview:password];
     
-    loginButton = [[UIButton alloc]initWithFrame:CGRectMake(85, 275, 150, 50)];
+    loginButton = [[UIButton alloc]initWithFrame:CGRectMake(60, 275, 200, 40)];
     [loginButton addTarget:self action:@selector(loginToVC) forControlEvents:UIControlEventTouchUpInside];
     [loginButton setTitle:@"Login" forState:UIControlStateNormal];
-    loginButton.layer.cornerRadius = 15;
+    loginButton.layer.cornerRadius = 5;
     
     loginButton.backgroundColor = [UIColor blackColor];
     
     [self.view addSubview:loginButton];
     
     
-    signUpButton = [[UIButton alloc] initWithFrame:CGRectMake(85,370, 150, 50)];
-    signUpButton.layer.cornerRadius = 15;
+    signUpButton = [[UIButton alloc] initWithFrame:CGRectMake(60,370, 200, 40)];
+    signUpButton.layer.cornerRadius = 5;
     [signUpButton setTitle:@"Sign Up" forState:UIControlStateNormal];
     signUpButton.backgroundColor = [UIColor blackColor];
     [signUpButton addTarget:self action:@selector(showSignUp) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:signUpButton];
     
     
-    chooseAvatar = [[UIButton alloc] initWithFrame:CGRectMake(85,240, 150, 25)];
-    chooseAvatar.layer.cornerRadius = 10;
-    [chooseAvatar setTitle:@"Select Avatar" forState:UIControlStateNormal];
-    chooseAvatar.backgroundColor = [UIColor blackColor];
-    [chooseAvatar addTarget:self action:@selector(chooseAvatar) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:chooseAvatar];
+//    chooseAvatar = [[UIButton alloc] initWithFrame:CGRectMake(60,240, 150, 25)];
+//    chooseAvatar.layer.cornerRadius = 5;
+//    [chooseAvatar setTitle:@"Select Avatar" forState:UIControlStateNormal];
+//    chooseAvatar.backgroundColor = [UIColor blackColor];
+//    [chooseAvatar addTarget:self action:@selector(chooseAvatar) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:chooseAvatar];
     
     
+    //headerImage = [[UIImage alloc]init];
+
     
+    headerFrame = [[UIImageView alloc]initWithFrame:CGRectMake(0, 10, 320, 70)];
+    [headerFrame setImage: [UIImage imageNamed:@"battletag"]];
+    [self.view addSubview:headerFrame];
     
     
     
@@ -125,21 +133,21 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)chooseAvatar
-{
-    NSLog(@"press");
-    
-    photoLibrary = [[UIImagePickerController alloc] init];
-    
-    photoLibrary.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    
-    photoLibrary.allowsEditing = YES;
-    photoLibrary.delegate = self;
-    
-    [self presentViewController:photoLibrary animated:YES completion:nil];
-    //[self saveAvatar];
-
-}
+//-(void)chooseAvatar
+//{
+//    NSLog(@"press");
+//    
+//    photoLibrary = [[UIImagePickerController alloc] init];
+//    
+//    photoLibrary.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+//    
+//    photoLibrary.allowsEditing = YES;
+//    photoLibrary.delegate = self;
+//    
+//    [self presentViewController:photoLibrary animated:YES completion:nil];
+//    //[self saveAvatar];
+//
+//}
 
 
 //-(void)saveAvatar
@@ -208,9 +216,10 @@
     GTASignUpViewController * signUpView = [[GTASignUpViewController alloc] initWithNibName:nil bundle:nil];
     
     UINavigationController * signUpNavView = [[UINavigationController alloc] initWithRootViewController:signUpView];
-    
-    
+
     signUpNavView.navigationBarHidden = YES;
+    
+    
     
     [self.navigationController presentViewController:signUpNavView animated:YES completion:^{
     }];

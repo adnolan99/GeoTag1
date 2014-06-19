@@ -26,6 +26,12 @@
     
     NSMutableArray * signUpFields;
     
+    UIButton * chooseAvatar;
+    UIImagePickerController * photoLibrary;
+
+    
+    UIImageView * headerFrame;
+    UIButton * backButton;
     
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -49,6 +55,22 @@
 {
     [super viewDidLoad];
     
+    
+    headerFrame = [[UIImageView alloc]initWithFrame:CGRectMake(0, 10, 320, 70)];
+    [headerFrame setImage: [UIImage imageNamed:@"battletag"]];
+    [self.view addSubview:headerFrame];
+    
+    backButton = [[UIButton alloc]initWithFrame:CGRectMake(10, 420, 70, 30)];
+    backButton.backgroundColor = [UIColor blackColor];
+    [backButton addTarget:self action:@selector(cancelSignUp) forControlEvents:UIControlEventTouchUpInside];
+    [backButton setTitle:@"Back" forState:UIControlStateNormal];
+    backButton.layer.cornerRadius = 5;
+
+    
+    [self.view addSubview:backButton];
+
+    
+    
 //    UIBarButtonItem * cancelSignUpButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelsignUpButton)];
 //    
 //    cancelSignUpButton.tintColor = [UIColor whiteColor];
@@ -66,10 +88,10 @@
     {
         NSInteger index = [signUpFieldNames indexOfObject:name];
         
-        UITextField * textField = [[UITextField alloc] initWithFrame:CGRectMake(20, (index * 50) + 50, 280, 40)];
+        UITextField * textField = [[UITextField alloc] initWithFrame:CGRectMake(20, (index * 50) + 100, 280, 40)];
         
         textField.backgroundColor = [UIColor lightGrayColor];
-        textField.layer.cornerRadius = 10;
+        textField.layer.cornerRadius = 5;
         textField.placeholder = name;
         textField.delegate = self;
         
@@ -81,13 +103,21 @@
     
         [self.view addSubview:textField];
         
-        signUpButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 340, 280, 40)];
+        signUpButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 310, 280, 40)];
         signUpButton.backgroundColor = [UIColor blackColor];
-        signUpButton.layer.cornerRadius = 10;
+        signUpButton.layer.cornerRadius = 8;
+        [signUpButton setTitle:@"Sign Up" forState:UIControlStateNormal];
+
+        
         [signUpButton addTarget:self action:@selector(signUp) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:signUpButton];
         
-        
+        chooseAvatar = [[UIButton alloc] initWithFrame:CGRectMake(90, 370, 150, 25)];
+        chooseAvatar.layer.cornerRadius = 5;
+        [chooseAvatar setTitle:@"Select Avatar" forState:UIControlStateNormal];
+        chooseAvatar.backgroundColor = [UIColor blackColor];
+        [chooseAvatar addTarget:self action:@selector(chooseAvatar) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:chooseAvatar];
     
     
     }
@@ -100,6 +130,22 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+-(void)chooseAvatar
+{
+    NSLog(@"press");
+    
+    photoLibrary = [[UIImagePickerController alloc] init];
+    
+    photoLibrary.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    photoLibrary.allowsEditing = YES;
+    photoLibrary.delegate = self;
+    
+    [self presentViewController:photoLibrary animated:YES completion:nil];
+    //[self saveAvatar];
+    
+}
 
 -(void)signUp
 {
