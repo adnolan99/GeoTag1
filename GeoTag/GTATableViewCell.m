@@ -36,11 +36,11 @@
         displayEnemyAvatar.layer.cornerRadius = 25;
         [self.contentView addSubview:displayEnemyAvatar];
         
-
-        dispEnemyUserName = [[UILabel alloc] initWithFrame:CGRectMake(20, 55, 100, 20)];
-        dispEnemyUserName.textColor = [UIColor blueColor];
-        dispEnemyUserName.font = [UIFont systemFontOfSize:15];
-        [self.contentView addSubview:dispEnemyUserName];
+//
+//        dispEnemyUserName = [[UILabel alloc] initWithFrame:CGRectMake(20, 55, 100, 20)];
+//        dispEnemyUserName.textColor = [UIColor blueColor];
+//        dispEnemyUserName.font = [UIFont systemFontOfSize:15];
+//        [self.contentView addSubview:dispEnemyUserName];
         
         dispEnemyCallSign = [[UILabel alloc] initWithFrame:CGRectMake(65, 20, 100, 20)];
         dispEnemyCallSign.textColor = [UIColor greenColor];

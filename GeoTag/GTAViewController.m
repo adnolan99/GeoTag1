@@ -75,7 +75,8 @@
     UILabel * avUserCallsign;
     UILabel * avUserUsername;
     UILabel * avUserScore;
-
+    UILabel * mineLabel;
+    UILabel * rocketLabel;
     
     UIImageView * userAvatar;
     UIImageView * enemyAvatar;
@@ -402,21 +403,34 @@
 {
     
     
+//    UIView * attackPanel;
+//    attackPanel.backgroundColor = [UIColor colorWithWhite:1 alpha:.5];
+//    
+//    [UIView animateWithDuration:0.2 animations:^{
+//        attackPanel.frame = CGRectMake(0, 250, self.view.frame.size.width, self.view.frame.size.height / 2);
+//    }];
+//    
+//    [self.view addSubview:attackPanel];
+    
+    
+    
+    
+    
     _attackModeActive = YES;
-    
-    
+
     if (_attackModeActive == YES)
     {
         region.span = MKCoordinateSpanMake(0.01, 0.01);
         [myMapView setRegion:region animated:YES];
 
     }
-    
-    
-    
+
     [UIView animateWithDuration:0.2 animations:^{
         myMapView.frame = CGRectMake(10, 60, self.view.frame.size.width - 20, 200);
         myMapView.layer.cornerRadius = 110;
+        
+        
+        
         
         
     }];
@@ -427,10 +441,23 @@
         gtaTVC.view.frame = CGRectMake(0, self.view.frame.size.height + 10, self.view.frame.size.width, self.view.frame.size.height);
     }];
     
+    
+    
+    mineLabel = [[UILabel alloc]initWithFrame:CGRectMake(45, self.view.frame.size.height - 110, 70, 20)];
+    mineLabel.text = [NSString stringWithFormat:@"mines"];
+    mineLabel.textColor = [UIColor blackColor];
+    mineLabel.font = [UIFont systemFontOfSize:20];
+    
     mines = [[UIButton alloc]initWithFrame:CGRectMake(50, self.view.frame.size.height - 85, 40, 40)];
     mines.backgroundColor = [UIColor grayColor];
     [mines addTarget:self action:@selector(toggleMines) forControlEvents:UIControlEventTouchUpInside];
 
+    
+    rocketLabel = [[UILabel alloc]initWithFrame:CGRectMake(240, self.view.frame.size.height - 110, 70, 20)];
+    rocketLabel.text = [NSString stringWithFormat:@"rockets"];
+    rocketLabel.textColor = [UIColor blackColor];
+    rocketLabel.font = [UIFont systemFontOfSize:20];
+    
     rockets = [[UIButton alloc]initWithFrame:CGRectMake(250, self.view.frame.size.height - 85, 40, 40)];
     rockets.backgroundColor = [UIColor blackColor];
     [rockets addTarget:self action:@selector(toggleRockets) forControlEvents:UIControlEventTouchUpInside];
@@ -497,6 +524,9 @@
     [self.view addSubview:avUserUsername];
     [self.view addSubview:avUserScore];
 
+    
+    [self.view addSubview:mineLabel];
+    [self.view addSubview:rocketLabel];
     [self.view addSubview:mines];
     [self.view addSubview:rockets];
     [self.view addSubview:backButton];
@@ -550,6 +580,8 @@
     [avUserUsername removeFromSuperview];
     [avUserScore removeFromSuperview];
     
+    [mineLabel removeFromSuperview];
+    [rocketLabel removeFromSuperview];
     [mines removeFromSuperview];
     [rockets removeFromSuperview];
     [backButton removeFromSuperview];

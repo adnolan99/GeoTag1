@@ -40,6 +40,7 @@
 		D5932FC31935466E00E7BC8C /* GTATableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D5932FC21935466E00E7BC8C /* GTATableViewCell.m */; };
 		D593BBA419462C390021CCC1 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D593BBA319462C390021CCC1 /* Crashlytics.framework */; };
 		D5CF7EC91951E88B00080B60 /* battletag.png in Resources */ = {isa = PBXBuildFile; fileRef = D5CF7EC81951E88B00080B60 /* battletag.png */; };
+		D5CF7ECC195320C900080B60 /* GTANavController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5CF7ECB195320C900080B60 /* GTANavController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +98,8 @@
 		D5932FC21935466E00E7BC8C /* GTATableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTATableViewCell.m; sourceTree = "<group>"; };
 		D593BBA319462C390021CCC1 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		D5CF7EC81951E88B00080B60 /* battletag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = battletag.png; path = ../../../Desktop/battletag.png; sourceTree = "<group>"; };
+		D5CF7ECA195320C900080B60 /* GTANavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTANavController.h; sourceTree = "<group>"; };
+		D5CF7ECB195320C900080B60 /* GTANavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTANavController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +193,8 @@
 		D5932F78192FD38700E7BC8C /* GeoTag */ = {
 			isa = PBXGroup;
 			children = (
+				D5CF7ECA195320C900080B60 /* GTANavController.h */,
+				D5CF7ECB195320C900080B60 /* GTANavController.m */,
 				D50FCAA7193E423A00EC09A5 /* MAPAnnotation.h */,
 				D50FCAA8193E423A00EC09A5 /* MAPAnnotation.m */,
 				D5932F81192FD38700E7BC8C /* GTAAppDelegate.h */,
@@ -372,6 +377,7 @@
 				D5932FBC1934D14200E7BC8C /* GTASignUpViewController.m in Sources */,
 				D5932F83192FD38700E7BC8C /* GTAAppDelegate.m in Sources */,
 				D5932FC31935466E00E7BC8C /* GTATableViewCell.m in Sources */,
+				D5CF7ECC195320C900080B60 /* GTANavController.m in Sources */,
 				D50FCAA9193E423A00EC09A5 /* MAPAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
